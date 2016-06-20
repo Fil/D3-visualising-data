@@ -1,81 +1,70 @@
 ---
 layout: page
 title: HTML
-subtitle: Making things appear in your browser
+subtitle: Faire apparaître des choses dans votre navigateur
 minutes: 20
 ---
 
-> ## Learning Objectives {.objectives}
+> ## Objectifs de la leçon {.objectives}
 >
-> * Create your first web page and view it in a browser
-> * Understand the structure of an HTML document
-> * Understand the different elements within an HTML document
+> * Créer votre première page web et la visualiser dans un navigateur
+> * Comprendre la structure d’un document HTML
+> * Distinguer les divers composants d’un document HTML
 
-A way of writing that is understood by all web browsers is HTML: 
-hypertext markup language. Since we don’t have the ability to do 
-logical operations (loops, etc.) with HTML alone, it’s 
-not technically a programming language.
+Tous les navigateurs Web comprennent les documents écrits en langage HTML: hypertext markup language. Mais ce langage ne permettant pas de procéder à des opérations logiques (boucles, etc.), on ne peut techniquement l’appeler langage de programmation.
 
-Let’s see how we can get our browser to greet the world. 
-We need to:
+Voyons tout d’abord comment on peut amener notre navigateur à saluer. 
+Nous allons:
 
-* Create a local folder 'my_first_webpage'
-* In the folder, create the file 'index.html'
-* Open the file with a text editor
+* Créer un répertoire local 'my_first_webpage'
+* Dans ce répertoire, créer un fichier nommé 'index.html'
+* Ouvrir ce fichier avec un éditeur de texte
 
-Now, if we want to open our new file in a browser, we have to tell it what kind of
-file to expect. To do this, we start our file with:
+Ensuite, pour ouvrir ce fichier dans un navigateur, il faut commencer par lui dire de quel type de fichier il s’agit. Pour cela, nous inscrivons comme premières lignes dans notre fichier:
 
 ~~~ {.html}
 <!DOCTYPE html>
 <html>
-	--> Everything goes in here <--
+	--> Tout le reste viendra ici <--
 </html> 
 ~~~
 
-Every good webpage consists of a head and a body. 
-The header (&lt;head&gt; to open and &lt;/head&gt; to close) normally
-contains any meta-data. This could be name of the page or
-the inclusion of other files. 
+Une page web bien formée comprend un entête (head) et un corps (body). 
+L’entête (&lt;head&gt; pour l’ouvrir et &lt;/head&gt; pour le fermer) devra normalement comporter les méta-données. COmme par exemple le nom de la page, ou une liste d’autres fichiers à inclure. 
 
-The body (&lt;body&gt; to open and &lt;/body&gt; to close) is where all our content
-should go. So everything we type between the brackets will be displayed 
-on our page.
+Le corps (entre &lt;body&gt; et &lt;/body&gt;) est là où nous allons placer notre contenu. Tout ce que nous entrons entre ces balises sera affiché sur notre page.
 
 ~~~ {.html}
 <head> 
 </head>
 <body> 
-	Hello world!
+	Salut!
 </body> 
 ~~~
 
-Since our browser understands this language, we can instantly 
-open our local index.html file and the browser will interpret our
-code as visual components. 
+Comme notre navigateur sait interpréter le langage HTML, nous pouvons instantanément ouvrir le fichier local index.html file et le navigateur transformera le code en éléments visuels. 
 
-HTML has more predefined elements that will vary in size and style. 
-To divide the page into different section, we can create a division 
-using &lt;div&gt; to open and &lt;/div&gt; to close it. 
+HTML comprend beaucoup d’éléments pré-définis, qui permettent de vaier les styles et tailles d’affichage. 
+Pour séparer la page en diverses sections, nous pouvons utiliser la balise &lt;div&gt; (pour ouvrir) et &lt;/div&gt; pour fermer chaque division. 
 
 ~~~ {.html}
 <!DOCTYPE html>
 <html> 
 	<head> 
-		--> meta-data (like page title, inclusion of other files) <--
+		--> meta-data (titre de la page, inclusion d'autres fichiers) <--
 	</head> 
 	<body> 
-		<div>Hello world!</div>
-		<div>Hello back!</div>
+		<div>Salut le monde!</div>
+		<div>Salut à toi!</div>
 	</body> 
 </html> 
 ~~~
 
-> ## Other elements {.challenge}
+> ## Autres éléments {.challenge}
 >
-> Create a folder that contains the file index.html (or download it).
-> What seems to be the difference between &lt;div&gt;, &lt;h1&gt;, and &lt;em&gt;?
-> What about the difference between two &lt;div&gt; elements and two &lt;span&gt; elements?
-> Create a heading that is in italics. Never be afraid to google to find out how to use certain elements and find out about the syntax!
+> Créer un répertoire qui contient le fichier index.html.
+> Quelle est la différence entre &lt;div&gt;, &lt;h1&gt;, et &lt;em&gt;?
+> Quelle est la différence entre deux éléments &lt;div&gt; successifs, et deux éléments &lt;span&gt; successifs?
+> Créer un intertitre en italiques. Ne craignez pas d’utiliser un moteur de recherche pour retrouver la syntaxe!
 
-Useful resources are also the mozilla developer network ([MDN](https://developer.mozilla.org/en-US/)) and [w3school](http://www.w3schools.com). 
+On trouvera des ressources utiles sur le Mozilla Developer Network ([MDN](https://developer.mozilla.org/fr/)) et sur le site [pompage](https://www.pompage.net/). 
