@@ -17,9 +17,9 @@ HTML permet d’ajouter une image très simplement dans les pages.
 <img class='image' src="cat.jpg">
 ~~~
 
-On remarque que cet élément IMG ne demande pas de balise fermante : l’idée est qu’il n’y a pas de contenu « à l’intérieur » de l’image.
+Pour que cela fonctionne, il faut télécharger une image de chat et la nommer ‘cat.jpg’ ; vous pouvez en trouver une dans notre dépôt.
 
-Pour la suite, il va falloir télécharger une image de chat ; vous pouvez en trouver une dans notre dépôt.
+On remarque que cet élément IMG ne demande pas de balise fermante : l’idée est qu’il n’y a pas de contenu « à l’intérieur » de l’image.
 
 An ajoutant une classe 'image' à notre fichier CSS, nous pouvons définir la taille et la position de l’image que nous venons de charger, et appliquer le même style à d’autres images par la suite. 
 
