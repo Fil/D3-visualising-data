@@ -1,29 +1,27 @@
 ---
 layout: page
-title: Images and SVG
-subtitle: Adding graphical components
+title: Images et SVG
+subtitle: Ajouter des éléments graphiques
 minutes: 20
 ---
 
-> ## Learning Objectives {.objectives}
+> ## Objectifs de la leçon {.objectives}
 >
-> * Adding images to your page
-> * Understanding Scalable Vector Graphics (SVGs) 
-> * Adding multiple SVGs to your page
+> * Ajouter des images dans la page
+> * Comprendre le format Scalable Vector Graphics (SVG) 
+> * Ajouter plusieurs SVG dans la page
 
-Websites that only consist of text can be quite boring. So let's have a look at how
-we can add an image. 
+HTML permet d’ajouter une image très simplement dans les pages. 
 
 ~~~{.html}
 <img class='image' src="cat.jpg">
 ~~~
 
-Note that the image element does not need a closing bracket. Having a closing bracket in this case would imply that there could be content between the brackets, which, in the case of an image does not make sense.
+On remarque que cet élément IMG ne demande pas de balise fermante : l’idée est qu’il n’y a pas de contenu « à l’intérieur » de l’image.
 
-If you want to follow along, you will need to download the cat image from our reposotory. Or you can select any other image from your computer. 
+Pour la suite, il va falloir télécharger une image de chat ; vous pouvez en trouver une dans notre dépôt.
 
-And by adding a class called 'image' to our CSS file, we can define the size and 
-position of the image we load and apply the style to other images we might want to load. 
+An ajoutant une classe 'image' à notre fichier CSS, nous pouvons définir la taille et la position de l’image que nous venons de charger, et appliquer le même style à d’autres images par la suite. 
 
 ~~~{.css}
 .image {
@@ -33,17 +31,12 @@ position of the image we load and apply the style to other images we might want 
 }
 ~~~
 
-The end goal for us is to create a graph, which will be made up of graphical 
-objects such as lines, circles, and squares (not photos of cats). 
-We could just find an image of a circle and use this to represent the data by 
-scaling and positioning it on the page, but that might not be the best way. 
-An image is an inefficient way to represent lines and circles and your webpage 
-would spend an unnecessary amount of time downloading each of these image files. 
+Notre objectif final est de créer un graphique, qui sera composé d’éléments tels que des lignes, des cercles, ou des rectangles (et pas des photos de chats). 
+Bien sûr nous pourrions chercher l’image d’un cercle et l’utiliser pour représenter nos données en le retaillant et en le positionnant sur la page, mais ce n’est pas la méthode la plus adaptée. 
 
-A better way to include graphical elements that aren't photos, is to use Scalable 
-Vector Graphics (SVGs).
+Une meilleure approche pour traiter d’élements graphiques qui ne sont pas des photos, est d’utiliser le format SVG (Scalable Vector Graphics : graphiques vectoriels redimensionnables).
 
-An SVG is just another element in the HTML file, used in the same way as a division.
+Un SVG peut être utilisé comme un format de fichier à part, mais on peut aussi l’écrire directement à l’intérieur du HTML, tout comme les éléments ‘div’ ou ‘h1’ vus précédemment.
 
 ~~~{.html}
 <svg class="chart">
@@ -52,9 +45,9 @@ An SVG is just another element in the HTML file, used in the same way as a divis
 </svg>
 ~~~
 
-Here, we've created an SVG canvas, using the styles of the class 'chart'.
-Within this element, we've created a circle, using the styles of the class 'circ1'.
-Both of these classes need to also be defined in our CSS file:
+Ici, nous venons de créer un fond SVG, avec les styles de la class ‘chart’.
+Sur ce fond, nous avons tracé un cercle, avec les styles de la classe 'circ1'.
+Ces deux classes doivent être définies dans notre fichier CSS:
 
 ~~~{.css}
 .chart {
@@ -69,20 +62,15 @@ Both of these classes need to also be defined in our CSS file:
 }
 ~~~
 
-The circle element is already defined. 'cx', 'cy', and 'r' are attributes that
-are special to the circle element. 'cx' and 'cy' define the x and y coordinates of 
-the center of the circle, 'r' is the radius of the circle. 
+L’élément circle est déjà défini. ‘cx', 'cy', et 'r' sont des attributs spécifiques à cet élément. ‘cx' et 'cy' definissent les coordonnées x et y du centre du cercle, et  'r' est son rayon. 
 
-But what if we don't want to only use circles, but instead want to use other shapes?
-On the internet we can find tons of helpful examples. A good resource to 
-find simple examples of using different, commonly used SVG shapes is 
-[w3school](http://www.w3schools.com/svg/default.asp). 
+Au-delà du cercle, d’autres formes sont possibles, dont on trouvera facilement des exemples sur Internet. Une excellente ressource pour des exemples avec SVG est [w3schools](http://www.w3schools.com/svg/default.asp).
 
 > ## Question {.challenge}
 >
-> What happens if 'cx' and 'cy' aren't set?
+> Que se passe-t-il si 'cx' et 'cy' n’ont pas été précisés?
 
-> ## Make art! {.challenge}
+> ## Faire de l’art! {.challenge}
 >
-> Make some art, using at least one circle, one rectangle, and one polygon.
-> If you don't know what to do, draw a robot! 
+> Dessiner quelque chose, à partir de formes comme un cercle, un rectangle, un polygone.
+> Par exemple, dessiner un robot! 
