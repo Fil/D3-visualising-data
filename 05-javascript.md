@@ -1,36 +1,36 @@
 ---
 layout: page
-title: JavaScript
-subtitle: Feeding a cat
+title: Javascript
+subtitle: Nourrir un chat
 minutes: 20
 ---
 
-> ## Learning Objectives {.objectives}
+> ## Objectifs de la leçon {.objectives}
 >
-> * Linking to a JavaScript file
-> * Passing HTML element tags to JavaScript
-> * Manipulating HTML elements using JavaScript
+> * Charger un fichier Javascript
+> * Passer des éléments HTML à Javascript
+> * Manipuler des éléments HTML avec Javascript
 
-We've learned how to integrate text and graphical objects into our page and we also know how to publish it.
-So far, we might as well just create a plot elsewhere and publish it as an image. But wouldn't it be much better, if the user could interact with the data? To do that, we need to learn a little scripting, and, again, HTML provides a scripting environment.
-Everything between &lt;script&gt; and &lt;/script&gt; within the body will be interpreted as JavaScript code. Since the code we write in the HTML file is executed sequentially, we need to make sure that whenever we refer to an element on the page, this element already exists. An easy way to ensure this is to include scripts just before the end of the body element. 
-Just like we did with styles, we can outsource our code into a separate file with the extension `.js`. 
+Nous avons appris à intégrer du texte et des éléments graphiques dans notre page, et nous avons aussi appris à publier cette page.
+Jusqu’ici, rien de ce que nous avons fait n’est spécifique à la visualisation de données. Nous pourrions très bien créer notre graphique dans un autre logiciel, l’exporter sous la forme d’une image, et le publier comme cela. Mais cette approche ne nous permettra pas d’aller plus loin : comment permettre à l’utilisateur d’interagir avec les données ? Pour cela, il va falloir apprendre à écrire des scripts. À nouveau, HTML fournit la solution en permettant d’entrer des scripts.
+Tout ce qui est défini entre les balises &lt;script&gt; et &lt;/script&gt; dans l’entête ou le corps de la page est interprété comme du code Javascript. Puisque le code est exécuté au moment où il apparaît dans la page, il faut s’assurer que les éléments auxquels on va faire référence existent déjà. La manière la plus simple de procéder est d’écrire les scripts vers le bas de la page, juste avant la balise </body> fermante. 
+Comme nous l’avons fait avec les styles, nous pouvons exporter notre code dans un fichier externe, cette fois-ci avec l’extension `.js`. 
 
-So, let's go back to using the cat image for now. We want the cat to acknowledge that we click on it.
-First we need to create our `interaction.js` file and link to it in the HTML body.
+Revenons maintenant à notre image de chat. Nous allons lui demander de miauler quand l’utilisateur le caresse avec le bout de sa souris.
+Il faut tout d’abord créer le fichier `interaction.js` , et l’appeler dans le corps du fichier HTML.
 
 ~~~{.html}
 <script src="interaction.js"></script>
 ~~~
 
-We need to introduce the script to the HTML element, using these basic steps:
+Pour que le script puisse fonctionner avec la page HTML, nous avons quatre étapes à formuler:
 
-* Set up a link between HTML and the script by giving the HTML element we want to interact with a unique ID.
-* Retrieving the element and assigning it to a variable in the script that we can work with.
-* Detect the action we are interested in, i.e. button click using an event listener.
-* Do things.
+* Créer un lien entre le HTML et le script — par exemple en donnant un identifiant unique à l’image avec laquelle nous voulons interagir.
+* Récupérer l’élément en question, et le mémoriser dans une variable du script, pour pouvoir travailler dessus.
+* Détecter l’action qui nous intéresse — c’est-à-dire le clic de souris, en utilisant un « event listener ».
+* Réaliser une action.
 
-The ID is an attribute we can set for the image:
+L’identifiant (ID) est un attribut unique que l’on peut donner à l’image sous cette forme:
 
 ~~~{.html}
 <div class='image'>
@@ -38,31 +38,30 @@ The ID is an attribute we can set for the image:
 </div>
 ~~~
 
-Using `getElementById`, we can grab the element from `document` (a magical object representing the entire page) and work with it in the JavaScript file.
+La fonction Javascript `getElementById` nous permet de récupérer cet élément depuis le `document` (un objet magique qui représente la page entière), et le mémoriser dans une variable pour travailler ensuite avec depuis le fichier Javascript.
 
 ~~~{.js}
 var cat_image = document.getElementById('cat');
 ~~~
 
-Now we want to detect if someone clicks on the cat image.
-Event listeners help us by constantly checking if someone performs
-a certain action.
+Nous voulons maintenant détecter si quelqu’un a cliqué sur l’image du chat.
+Les « listeners » nous aident en nous indiquant les événements réalisés par les humains sur notre page.
 
 ~~~{.js}
 var cat_image = document.getElementById('cat');
 cat_image.addEventListener("click", meow);
 ~~~
 
-Our event listener takes two arguments: the type of event and what we want it to do. 
-We want to execute a function called `meow()`, which will open a pop-up window. We can use the JavaScript function alert().
+Notre listener prend deux arguments: le type d’événement que l’on va écouter, et une fonction dite « callback », qui sera appelée lorsque l’événement se produira. 
+Cette fonction, nous l’appelons `meow()` (miaou), elle ouvrira une fenêtre pop-up. Pour cela nous pouvons utiliser la fonction Javascript alert().
 
 ~~~{.js}
 function meow() {
-	alert("Meow!");
+	alert("Miaou!");
 };
 ~~~
 
-If we want to execute a sequence of functions, we can also create something that's called `inline` function, that is only defined in the scope of this specific callback. Within this function, we can call `meow()`, but also othe functions, like `purr()` (which doesn't exist, yet).
+On peut aussi définir une fonction directement dans le listener, par exemple dans le cas où l’on veut exécuter une série d’opérations spécifiques à cet endroit. Ainsi par exemple la construction suivante va appeler la fonction `meow()`, mais aussi d’autres fonctions, comme `purr()` (ronronner… laquelle n’existe pas encore).
 
 ~~~{.js}
 var cat_image = document.getElementById('cat');
@@ -72,7 +71,7 @@ cat_image.addEventListener("click", function() {
 });
 ~~~
 
-Obviously, we can also drop the `meow()` function, if we don't want to use it ever again:
+On peut aussi tout à fait se passer de nommer les fonctions de callback, et les définir de façon entièrement anonyme:
 
 ~~~{.js}
 var cat_image = document.getElementById('cat');
@@ -83,50 +82,43 @@ cat_image.addEventListener("click", function() {
 ~~~
 
 
-> ## Debugging in a browser {.callout}
-> If we right click anywhere on our page and select "Inspect Element", the browser takes us to the developer tools.
-> Here, we have different tabs. The three most important ones are:
+> ## Débuguer dans le navigateur {.callout}
+> Si l’on fait un clic-droit sur la page pour ouvrir l’inspecteur, on revient aux outils développeurs.
+> Parmi les onglets présents se trouvent:
 >
-> * Console - The console alerts us to things going wrong in out code by showing us an error and telling us in what line the error ocurred. We can also display the values of variables by including `colsole.log(x)` in our code.
-> * Elements - If we want to know if our HTML elements are all in the right spot, this is where we need to look. Hovering over any part of the page will highlight the according element and we can look at how they are styled and temporarily change attributes. 
-> * Sources - Here, we can look at the files that are used by our page. And even better, if we navigate to the JavaScript file, we can add breakpoints that stay in place when we reload the page. This allows us to investigate values of variables on the spot.
+> * Console - La console nous prévient des erreurs. Elle permet aussi à notre code d’envoyer des messages, et d’afficher le contenu d’une variable `x`, en utilisant l’instruction `console.log(x)`.
+> * Elements - Permet de vérifier si tous nos éléments HTML sont au bon endroit. En survolant n’importe quelle région de la page, on voit se surligner les éléments correspondants et on peut vérifier quels styles et attributs leur sont appliqués — et même modifier temporairement ces attributs, pour faire des essais « en direct ». 
+> * Sources - Ceci nous donne accès à l’ensemble des fichiers qui définissent notre page. Pour les fichiers Javascript, on peut même positionner des _breakpoints_ pour mettre en pause l’exécution des scripts et observer l’état des variables.
 
-> ## Feed your pet cat {.challenge}
-> Create a button using the &lt;button&gt; element to feed the cat using the steps outlined earlier.
-> Use the alert() function to have the cat thank you.
+> ## Nourrir votre chat {.challenge}
+> Créer un bouton en utilisant l’élément &lt;button&gt;;  le bouton permettra de nourrir le chat en utilisant les éléments définis plus haut.
+> Utiliser la fonction alert() pour que le chat vous remercie.
 
-The next step to having a fully interactive page is to
-change HTML elements using JavaScript. We've created a button in the HTML file 
-and are calling a function when it is clicked. 
-The goal now is to make the cat put on a little bit of weight when we feed it.
-We have to link to both the cat element and the food button so that
-both files know what we're talking about.
+L’étape suivante pour une page totalement interactive, consiste à modifier les éléments HTML en utilisant Javascript. Nous avons créé un bouton dans le HTML, et ce bouton appelle une fonction quand il est cliqué. 
 
-We're setting the width by stringing a few words together:
+Le but maintenant est que le chat grossisse un peu à chaque fois qu’il est nourri. Pour cela il faut mémoriser à la fois le bouton et le chat.
+
+Pour fixer la largeur de l’image, on va écrire ces mots, en les reliant par des points:
 'cat_image.style.width'.
-We can think of 'cat_image' as having an attribute called 'style', which in turn has an attribute
-called 'width'.
-Let's add a couple of grams.
-We have to retrieve the current object width. Our 'cat_image' object also has a
-attribute called 'offsetWidth'. This will give us the current width as a number (as
-opposed to the string '200px').
-Google is your friend here. Use it to find out these handy functions.
-Lastly we have to append the new value with 'px'.
+Il faut penser que la variable 'cat_image' est un objet possédant un attribut style, lequel à son tour a un attribut 'width'.
+Ajoutons quelques grammes à notre chat.
+Il nous faut d’abord récupérer la largeur courante de l’objet. Comme on peut le voir dans l’inspecteur, notre objet 'cat_image' a un attribut 'offsetWidth'. Ceci nous donne sa largeur courante sous forme d’un nombre (et non pas d’une chaîne '200px').
+On va calculer la nouvelle valeur, et lui ajouter 'px’, puis l’indiquer dans le style de notre image.
 
 ~~~{.js}
 var cat_image = document.getElementById('cat');
-var feed_button = document.getElementById('feed_button');
+var feed_button = document.getElementById('button1');
 
-feed_button.addEventListener("click", feed);
-function feed() {
+button1.addEventListener("click", nourrir_le_chat);
+function nourrir_le_chat() {
 	cat_image.style.width = (cat_image.offsetWidth + 30.0) + 'px';
 };
 ~~~
 
-We could also pass an argument into the `feed` function by writing it in the brackets.
-We might, for example, want the user to be able to decide the meal size the cat eats.
+On peut aussi passer un argument à la fonction `nourrir_le_chat` en l’inscrivant dans les parenthèses.
+Par exemple, l’utilisateur pourrait chisir quelle portion de nourriture il donne à son chat.
 
-We can also return a value and assign it to a variable (just like we do with any function we used so far, e.g. var element = document.getElementById("someID");): 
+Il faudrait alors renvoyer une valeur et l’assigner à une variable (tout comme on a fait avec n’importe quelle autre fonction, par exemple `var element = document.getElementById("someID");`): 
 
 ~~~{.js}
 var new_width = feed(10);
@@ -137,33 +129,31 @@ function feed(mealsize) {
 };
 ~~~
 
-In JavaScript there are two main data types: strings (text, everything in quotes)
-and numbers. It's important to remember that you can't do maths with strings or
-append numbers together.
+En Javascript il y a deux grands types de données: les chaînes de caractères (texte, tout entre guillemets)
+et les nombres. Il est important de se souvenir qu’on ne peut pas faire de calculs avec des chaînes.
 
-For example:
+Par exemple:
 `5+5 = 10`
-but
+mais
 `'5'+'5' = '55'`
 
-If one of the arguments is a string, the other one gets converted, too:
+Si l’un des arguments est une chaîne, l’autre sera converti, par exemple:
 `5 + '5' = '55'`
 
-We've also just used that, when we concatenated
-`(cat_image.offsetWidth + 30.0) + 'px'`.
+C’est ce que l’on vient de faire lorsque nous avons concaténé `(cat_image.offsetWidth + 30.0) + 'px'`.
 
-> ## Other event listeners, that might come in handy  {.callout}
-> * dblclick - Double click
-> * contextmenu - Right click
-> * mouseover - Mouse moved over an element
-> * keypress - Key pressed on keyboard
-
-
-> ## Let the cat work out  {.challenge}
-> Create a second button 'run around the block', that makes the cat slimmer again.
+> ## Autres listeners qui peuvent s’avérer utiles  {.callout}
+> * dblclick - Double clic
+> * contextmenu - Clic-droit
+> * mouseover - Le pointeur de la souris passe sur un élément
+> * keypress - Appui d’une touche du clavier 
 
 
-By the end of this lesson, your page should look something like this:
+> ## Un peu de sport pour notre chat  {.challenge}
+> Créer un second bouton “faire du sport” qui fasse maigrir le chat.
+
+
+À la fin de cette leçon, votre page devrait ressembler à ceci:
 
 <iframe src="http://isakiko.github.io/D3-visualising-data/code/meow.html" width="1000" height="250"></iframe>
 
