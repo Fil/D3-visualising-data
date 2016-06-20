@@ -1,53 +1,47 @@
 ---
 layout: page
 title: CSS
-subtitle: Doing it in style
+subtitle: Le faire avec style
 minutes: 20
 ---
 
-> ## Learning Objectives {.objectives}
+> ## Objectifs de la leçon {.objectives}
 >
-> * Change the appearance of different HTML elements
-> * Create new classes in a CSS file
-> * Apply these classes to different HTML elements 
+> * Modifier l’apparence de divers éléments HTML
+> * Créer des classes dans un fichier CSS
+> * Appliquer ces classes à divers éléments HTML 
 
-The heading has a certain look. This look (or style) includes the 
-color, position, font size, as well as many other attributes. 
+Le titre a une certaine apparence. Ce look (ce style) comprend la couleur, la position, la taille des caractères, et d’autres attributs.. 
 
-We can change the appearance of our text in different ways. 
-A quick way is to simply mention what we want our element
-to look like when we create it by setting the "style" attribute.
-If we want to change the color, for example, we write:
+Nous pouvons modifier l’apparence de notre texte de diverses manières. 
+Une façon rapide est de simplement indiquer ces commandes dans son attribut "style".
+Par exemple, pour modifier la couleur, on écrit:
 
 ~~~ {.html}
-<h1 style="color:blue">This is a blue heading</h1>
+<h1 style="color:blue">Voici un titre bleu</h1>
 ~~~
 
-Changing the font size: 
+Pour modifier la taille de la police: 
 
 ~~~ {.html}
-<h1 style="font-size: 80px">This is a big heading</h1>
+<h1 style="font-size: 80px">Un GROS titre</h1>
 ~~~
 
-If we want to change two things at the same time, we just mention all of them at once:
+Pour modifier deux styles, il suffit de les additionner en les séparant par un point-virgule:
 
 ~~~ {.html}
-<h1 style="font-size: 80px; color: blue">This is a big, blue heading</h1>
+<h1 style="font-size: 80px; color: blue">Un titre gros et bleu</h1>
 ~~~
 
-This is a quick and simple way to change the appearance of elements on the spot.
-However, if we want to create different elements of the same type, we have to do a lot of typing, 
-and our file will quickly become confusing and hard to maintain. 
+Cette méthode est simple et rapide et permet de modifier les élements sur place.
+Cependant, si nous voulons modifier plusieurs éléments de la même manière, il va falloir saisir les mêmes informations à chaque fois, et le fichier va devenir confus et difficile à gérer sur le long terme. Mieux vaut tenter de garder séparés le fond et la forme. 
 
-If we want to change the look of many elements at the same time, we 
-can instead create a style file (extension .css).
+À la place de ces style= codés « en dur », il vaut mieux créer un fichier de styles à part (avec l’extension .css).
 
-* create a CSS file: styles.css
+* Créer un fichier CSS: styles.css
 
-In this file, we can define classes, that we can then apply to one or more of 
-our elements in the HTML file. 
-Let's create a class called 'title' that we want to apply to different elements 
-on our page.
+Dans ce fichier nous allons définir des classes, que nous appliquerons ensuite à certains élements de notre fichier HTML. 
+Créons par exemple une classe nommée 'title'.
 
 ~~~ {.css}
 .title
@@ -58,8 +52,7 @@ on our page.
 }
 ~~~
 
-All that's left to do, is to tell the HTML file where to find our new CSS file. This is done 
-by linking to it in the head: 
+Il ne reste alors plus qu’à expliquer dans notre fichier HTML où trouver la feuille de styles CSS. Pour cela on crée ce lien dans la partie head du fichier: 
 
 ~~~ {.html}
 <!DOCTYPE html>
@@ -69,24 +62,24 @@ by linking to it in the head:
 	</head> 
 ~~~
 
-In the body, we can use the class that we just created:
+Dans le corps du fichier, on peut dès lors utiliser la classe que l’on vient de créer:
 
 ~~~ {.html}
 	<body> 
-		<div class="title"> First title </div>
-		<div> some text </div>
-		<div class="title"> And another title </div>
+		<div class="title"> Premier titre </div>
+		<div> du texte </div>
+		<div class="title"> Autre titre </div>
 	</body> 
 </html> 
 ~~~
 
-> ## Create and use your own class {.challenge}
+> ## Créer et utiliser sa propre classe {.challenge}
 >
-> Create a class called 'description' and a 'div' element with text that has this class.
-> Make the text dark gray with a custom font size. 
-> Add a black border just on the left side of the 'div' and add padding around the text. 
-> Try adding in enough text so that it wraps over multiple lines, and then set the width of the 'div' to different values. 
-> Try setting the background color of the 'div' element. 
-> If you like, play with the 'title' class as well, until you like how it looks. 
+> Créez une classe nommée 'description' et un élément 'div' contenant du texte, et portant cette classe.
+> Rendre le texte en gris foncé avec une taille de caractères personnalisée. 
+> Ajouter un contour noir sur la gauche du ‘div’ et ajouter une marge intérieure (padding) autour du texte. 
+> Ajouter suffisamment de texte pour former plusieurs lignes, et modifier la largeur de la div pour voir ce que cela donne. 
+> Modifier la couleur de fond de l’élément ‘div’. 
+> Si vous le souhaitez, jouez aussi avec la classe ‘title’ jusqu’à obtenir un résultat qui vous plaise. 
 
-We can check out how our elements are styled in the developer tools. To get to them, right-click on any element on the page and select 'Inspect element'. The developer tools should open and you should be in the 'Elements' tab. Here, you can navigate through the html file and inspect css properties at the same time. 
+Afin de voir comment les éléments sont stylés, on va ouvrir les outils pour développeurs (l’« inspecteur » présent dans tous les navigateurs modernes). Pour activer cet outil, un clic-droit n’importe où sur la page offre un menu qui permet d’« inspecter l’élément ». À partir de là, on peut analyser les différentes propriétés CSS de notre page. On peut en profiter pour explorer les différents onglets de l’inspecteur.

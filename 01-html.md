@@ -44,7 +44,7 @@ Le corps (entre &lt;body&gt; et &lt;/body&gt;) est là où nous allons placer no
 
 Comme notre navigateur sait interpréter le langage HTML, nous pouvons instantanément ouvrir le fichier local index.html file et le navigateur transformera le code en éléments visuels. 
 
-HTML comprend beaucoup d’éléments pré-définis, qui permettent de vaier les styles et tailles d’affichage. 
+HTML comprend beaucoup d’éléments pré-définis, qui permettent de varier les styles et tailles d’affichage. 
 Pour séparer la page en diverses sections, nous pouvons utiliser la balise &lt;div&gt; (pour ouvrir) et &lt;/div&gt; pour fermer chaque division. 
 
 ~~~ {.html}
