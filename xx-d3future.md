@@ -1,36 +1,30 @@
 ---
 layout: page
-title: Beyond this content
-subtitle: ...and now what??
+title: Pour aller plus loin
+subtitle: …et ensuite??
 minutes: 20
 ---
 
-> ## Learning Objectives {.objectives}
+> ## Objectif de la leçon {.objectives}
 > 
-> * How do I make the plot I want?
-> * What are alternatives to using D3 to create pretty plots?
+> * Comment faire le graphe que je veux?
+> * Quelles alternatives à D3 pour créer de jolis graphiques?
 
-Choosing the right plot for your data is the first step to making it as accessible as 
-possible. Even though bubble plots are objectively beautiful, they might not be
-the best choice for your specific data.
+Choisir le bon schéma graphique pour vos données, c’est le premier pas pour les rendre aussi accessibles et compréhensibles qu’elles le méritent. Même si les graphiques à bulles sont très jolis, ils ne sont pas obligatoirement le bon choix pour vos données.
 
-Other people have thought about this, too, and came up with this chart, that might come in handy:
+D’autres personnes ont réfléchi à ce problème, et ont mis en place cette réflexion:
 <img src="img/choose_right_chart.png" alt="Choose your chart" width="900" />
 [Source](https://www.flickr.com/photos/amit-agarwal/3196386402/)
 
-You can get more inspiration on [d3js.org](http://d3js.org).
-Here, you will find plenty of beautiful examples of plots that people have already made as well as a whole gallery of almost everything you can imagine with the according code right underneath it.
+Vous pouvez vous inspirer des graphiques présentés sur [d3js.org](http://d3js.org).
+Là, vous trouverez de très nombreux exemples de graphiques que des gens ont déjà réalisés et dont ils partagent le code et les méthodes..
 
 <img src="img/d3-screenshot.png" alt="D3 webpage" width="900" />
 
-Most of the examples happily link you to their code so you can go through it 
-and modify it to suit your data. Some examples don't volunteer their code like this. 
-But through the beauty of the internet, all that code is online, too, and we can have a 
-look at it using the browser's developer tools (right click, 'inspect element').
+La plupart des exemples offrent un lien direct sur leur code, ce qui permet de les parcourir et de les modifier pour les associer à vos données. D’autres exemples ne le font pas, mais par la mmagie de l’internet, le code est souvent visible quand même grâce aux outils de développement de votre navigateur.
 
-This workshop tries to give you the tools you need to download someone's code and 
-modify it for your needs. 
-There are of course other ways you can create plots. Some handy packages that are online are:
+Cet aterlier visait à vous donner les outils nécessaires pour comprendre le code de quelqu’un d’autre et l’adapter à vos besoins. 
+Voici d’autres pistes pour créer de jolis graphiques pour le web:
 
 * [highcharts](http://www.highcharts.com/)
 * [plot.ly](https://plot.ly/feed/)
@@ -39,4 +33,4 @@ There are of course other ways you can create plots. Some handy packages that ar
 * [dimplejs](http://dimplejs.org/)
 * [metricsgraphics](http://metricsgraphicsjs.org/)
 
-Not all of them are free and not all of them are completely customisable, but they often offer a quicker and easier ways to create plots that you can then put online. 
+Ils ne sont pas tous libres ni aussi personnalisables que ceux de D3, mais ils proposent souvent des méthodes rapides pour faire des graphiques que vous pouvez ensuite exploiter en ligne.
