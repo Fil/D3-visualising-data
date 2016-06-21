@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
-    <title>Software Carpentry: Images and SVG</title>
+    <title>Software Carpentry: Images et SVG</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
@@ -25,39 +25,39 @@
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h1 class="title">Images and SVG</h1>
-          <h2 class="subtitle">Adding graphical components</h2>
-<div id="learning-objectives" class="objectives panel panel-warning">
+          <h1 class="title">Images et SVG</h1>
+          <h2 class="subtitle">Ajouter des éléments graphiques</h2>
+<div id="objectifs-de-la-leçon" class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+<h2 id="objectifs-de-la-leçon" class="objectives panel panel-warning"><span class="glyphicon glyphicon-certificate"></span>Objectifs de la leçon</h2>
 </div>
 <div class="panel-body">
 <ul>
-<li>Adding images to your page</li>
-<li>Understanding Scalable Vector Graphics (SVGs)</li>
-<li>Adding multiple SVGs to your page</li>
+<li>Ajouter des images dans la page</li>
+<li>Comprendre le format Scalable Vector Graphics (SVG)</li>
+<li>Ajouter plusieurs SVG dans la page</li>
 </ul>
 </div>
 </div>
-<p>Websites that only consist of text can be quite boring. So let's have a look at how we can add an image.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;img</span><span class="ot"> class=</span><span class="st">&#39;image&#39;</span><span class="ot"> src=</span><span class="st">&quot;cat.jpg&quot;</span><span class="kw">&gt;</span></code></pre>
-<p>Note that the image element does not need a closing bracket. Having a closing bracket in this case would imply that there could be content between the brackets, which, in the case of an image does not make sense.</p>
-<p>If you want to follow along, you will need to download the cat image from our reposotory. Or you can select any other image from your computer.</p>
-<p>And by adding a class called 'image' to our CSS file, we can define the size and position of the image we load and apply the style to other images we might want to load.</p>
-<pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.image</span> <span class="kw">{</span>
+<p>HTML permet d’ajouter une image très simplement dans les pages.</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;img</span><span class="ot"> class=</span><span class="st">&#39;image&#39;</span><span class="ot"> src=</span><span class="st">&quot;cat.jpg&quot;</span><span class="kw">&gt;</span></code></pre></div>
+<p>Pour que cela fonctionne, il faut télécharger une image de chat et la nommer ‘cat.jpg’ ; vous pouvez en trouver une dans notre dépôt.</p>
+<p>On remarque que cet élément IMG ne demande pas de balise fermante : l’idée est qu’il n’y a pas de contenu « à l’intérieur » de l’image.</p>
+<p>An ajoutant une classe 'image' à notre fichier CSS, nous pouvons définir la taille et la position de l’image que nous venons de charger, et appliquer le même style à d’autres images par la suite.</p>
+<div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.image</span> <span class="kw">{</span>
     <span class="kw">width:</span> <span class="dt">200px</span><span class="kw">;</span>
     <span class="kw">position:</span> <span class="dt">relative</span><span class="kw">;</span>
     <span class="kw">left:</span> <span class="dt">20px</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre>
-<p>The end goal for us is to create a graph, which will be made up of graphical objects such as lines, circles, and squares (not photos of cats). We could just find an image of a circle and use this to represent the data by scaling and positioning it on the page, but that might not be the best way. An image is an inefficient way to represent lines and circles and your webpage would spend an unnecessary amount of time downloading each of these image files.</p>
-<p>A better way to include graphical elements that aren't photos, is to use Scalable Vector Graphics (SVGs).</p>
-<p>An SVG is just another element in the HTML file, used in the same way as a division.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;chart&quot;</span><span class="kw">&gt;</span>
+<span class="kw">}</span></code></pre></div>
+<p>Notre objectif final est de créer un graphique, qui sera composé d’éléments tels que des lignes, des cercles, ou des rectangles (et pas des photos de chats). Bien sûr nous pourrions chercher l’image d’un cercle et l’utiliser pour représenter nos données en le retaillant et en le positionnant sur la page, mais ce n’est pas la méthode la plus adaptée.</p>
+<p>Une meilleure approche pour traiter d’élements graphiques qui ne sont pas des photos, est d’utiliser le format SVG (Scalable Vector Graphics : graphiques vectoriels redimensionnables).</p>
+<p>Un SVG peut être utilisé comme un format de fichier à part, mais on peut aussi l’écrire directement à l’intérieur du HTML, tout comme les éléments ‘div’ ou ‘h1’ vus précédemment.</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;svg</span><span class="ot"> class=</span><span class="st">&quot;chart&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;circle</span><span class="ot"> cx=</span><span class="st">&quot;25&quot;</span><span class="ot"> cy=</span><span class="st">&quot;25&quot;</span><span class="ot"> r=</span><span class="st">&quot;15&quot;</span><span class="ot"> class=</span><span class="st">&quot;circ1&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;/circle&gt;</span>
-<span class="kw">&lt;/svg&gt;</span></code></pre>
-<p>Here, we've created an SVG canvas, using the styles of the class 'chart'. Within this element, we've created a circle, using the styles of the class 'circ1'. Both of these classes need to also be defined in our CSS file:</p>
-<pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.chart</span> <span class="kw">{</span>
+<span class="kw">&lt;/svg&gt;</span></code></pre></div>
+<p>Ici, nous venons de créer un fond SVG, avec les styles de la class ‘chart’. Sur ce fond, nous avons tracé un cercle, avec les styles de la classe 'circ1'. Ces deux classes doivent être définies dans notre fichier CSS:</p>
+<div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css"><span class="fl">.chart</span> <span class="kw">{</span>
     <span class="kw">width:</span> <span class="dt">100px</span><span class="kw">;</span>
     <span class="kw">height:</span> <span class="dt">100px</span><span class="kw">;</span>
 <span class="kw">}</span>
@@ -66,23 +66,23 @@
     <span class="kw">stroke:</span> <span class="dt">green</span><span class="kw">;</span> 
     <span class="kw">fill:</span> <span class="dt">white</span><span class="kw">;</span>
     <span class="kw">stroke-width:</span> <span class="dt">5</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre>
-<p>The circle element is already defined. 'cx', 'cy', and 'r' are attributes that are special to the circle element. 'cx' and 'cy' define the x and y coordinates of the center of the circle, 'r' is the radius of the circle.</p>
-<p>But what if we don't want to only use circles, but instead want to use other shapes? On the internet we can find tons of helpful examples. A good resource to find simple examples of using different, commonly used SVG shapes is <a href="http://www.w3schools.com/svg/default.asp">w3school</a>.</p>
+<span class="kw">}</span></code></pre></div>
+<p>L’élément circle est déjà défini. ‘cx', 'cy', et 'r' sont des attributs spécifiques à cet élément. ‘cx' et 'cy' definissent les coordonnées x et y du centre du cercle, et 'r' est son rayon.</p>
+<p>Au-delà du cercle, d’autres formes sont possibles, dont on trouvera facilement des exemples sur Internet. Une excellente ressource pour des exemples avec SVG est <a href="http://www.w3schools.com/svg/default.asp">w3schools</a>.</p>
 <div id="question" class="challenge panel panel-success">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pencil"></span>Question</h2>
+<h2 id="question" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Question</h2>
 </div>
 <div class="panel-body">
-<p>What happens if 'cx' and 'cy' aren't set?</p>
+<p>Que se passe-t-il si 'cx' et 'cy' n’ont pas été précisés?</p>
 </div>
 </div>
-<div id="make-art" class="challenge panel panel-success">
+<div id="faire-de-lart" class="challenge panel panel-success">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pencil"></span>Make art!</h2>
+<h2 id="faire-de-lart" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Faire de l’art!</h2>
 </div>
 <div class="panel-body">
-<p>Make some art, using at least one circle, one rectangle, and one polygon. If you don't know what to do, draw a robot!</p>
+<p>Dessiner quelque chose, à partir de formes comme un cercle, un rectangle, un polygone. Par exemple, dessiner un robot!</p>
 </div>
 </div>
         </div>

@@ -26,155 +26,157 @@
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <h1 class="title">D3 - Transitions</h1>
-          <h2 class="subtitle">Move it!</h2>
-<div id="learning-objectives" class="objectives panel panel-warning">
+          <h2 class="subtitle">On bouge!</h2>
+<div id="objectifs-du-cours" class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+<h2 id="objectifs-du-cours" class="objectives panel panel-warning"><span class="glyphicon glyphicon-certificate"></span>Objectifs du cours</h2>
 </div>
 <div class="panel-body">
 <ul>
-<li>Using a slider</li>
-<li>Updating data points using d3.transition</li>
-<li>Putting it all together by adding regional averages in a master challenge!</li>
+<li>Utiliser un slider</li>
+<li>Mettre à jour des points avec d3.transition</li>
+<li>Tout regrouper dans un dernier effort!</li>
 </ul>
 </div>
 </div>
-<p>At the moment, the year that we are looking at in the data is hardcoded. Naturally, we want the user to be able to see how the data changes over time.</p>
-<p>Let's do this a slider. The first thing we need is add this slider to the user interface (our website). A slider element is actually an <code>input</code> element with the the type <code>range</code>. We give it a ID in order to be able to select is from our JavaScript script, a class to style it (if we choose to), and a minimum, maximum, and step size that depend on our data. <code>value</code> is what we read out in order to know the position of the slider. Let's initialise it somewhere in the middle (1979).</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> name=</span><span class="st">&quot;range&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> id=</span><span class="st">&quot;year_slider&quot;</span><span class="ot"> value=</span><span class="st">&quot;1979&quot;</span><span class="ot"> min=</span><span class="st">&quot;1950&quot;</span><span class="ot"> max=</span><span class="st">&quot;2008&quot;</span><span class="ot"> step=</span><span class="st">&quot;1&quot;</span> <span class="kw">&gt;&lt;br&gt;</span></code></pre>
-<p>In our script, we now want the year to be a variable, so we need to initialise it. Because the value is a string, we need to parse it to an integer using <code>parseInt()</code>. To get the index (rather than the actual year), we can simply subtract the first year 1950.</p>
-<pre class="js"><code>var year_idx = parseInt(document.getElementById(&quot;year_slider&quot;).value)-1950;</code></pre>
-<p>Updating the year becomes quite simple. All we need to do is add another event listener that changes the year the moment we touch the slider. The event we want to listen for is called <code>input</code>. We then execute the <code>update()</code> function we wrote earlier.</p>
-<pre class="js"><code>d3.select(&quot;#year_slider&quot;).on(&quot;input&quot;, function () {
-    year_idx = parseInt(this.value) - 1950;
-    update();
-});</code></pre>
-<p>So far, the update function only knows how to handle new data (<code>.enter</code>) and removed data (<code>.exit</code>), but not what to do when we update data. In addition to <code>d3.enter()</code> and <code>d3.exit()</code>, D3 also offers <code>d3.transition</code> to handle updating data. First, we need to define how to transition between data points. We might want to interpolate between to values linearly over the duration of 200 ms, like this:</p>
-<pre class="js"><code>dot.transition().ease(&quot;linear&quot;).duration(200);</code></pre>
-<p>Now we know how it's gonna happen, but we need to tell the transition what the actual change is. We can simply move the part of our code that updates the circle attributes from our <code>enter</code> function to our <code>transition</code> function. Now, instead of using a hardcoded index for the year, we use the index <code>year_idx</code> that we updated in our event listener earlier.</p>
-<pre class="js"><code>dot.enter().append(&quot;circle&quot;).attr(&quot;class&quot;,&quot;dot&quot;)
-        .style(&quot;fill&quot;, function(d) { return colorScale(d.region); });
-dot.exit().remove();
-dot.transition().ease(&quot;linear&quot;).duration(200)
-                .attr(&quot;cx&quot;, function(d) { return xScale(d.income[year_idx]); }) // this is how attr knows to work with the data
-                .attr(&quot;cy&quot;, function(d) { return yScale(d.lifeExpectancy[year_idx]); })
-                .attr(&quot;r&quot;, function(d) { return rScale(d.population[year_idx]); });</code></pre>
-<div id="other-transition-functions-you-might-want" class="callout panel panel-info">
+<p>Dans notre code, l’année à laquelle nous regardons les données est codée « en dur » : il s’agit de l’année 2009, dernière de la série.</p>
+<p>Maintenant nous souhaitons que l’utilisateur puisse observer l’évolution de ces données au fil du temps.</p>
+<p>Faisons cela avec un curseur de défilement (slider). La première chose à faire est d’ajouter ce slider ) notre interface (notre page). En HTML il s’agit tout simplement d’un élément <code>input</code> de type <code>range</code>. Nous lui attribuons un identifiant de façon à pouvoir le sélectionner depuis notre script, une classe pour pouvoir lui affecter un style (si on le souhaite), et des valeurs minimum, maximum, et de pas qui dépendent de nos données. <code>value</code> est la propriété qui nous permet de savoir à quelle position le slider est réglé. Initialisons-le quelque part au milieu de notre série (1979).</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;range&quot;</span><span class="ot"> name=</span><span class="st">&quot;range&quot;</span><span class="ot"> class=</span><span class="st">&quot;slider&quot;</span><span class="ot"> id=</span><span class="st">&quot;year_slider&quot;</span><span class="ot"> value=</span><span class="st">&quot;1979&quot;</span><span class="ot"> min=</span><span class="st">&quot;1950&quot;</span><span class="ot"> max=</span><span class="st">&quot;2008&quot;</span><span class="ot"> step=</span><span class="st">&quot;1&quot;</span> <span class="kw">&gt;&lt;br&gt;</span></code></pre></div>
+<p>Dans notre script, l’année est une variable, nous devons l’intialiser. Comme <code>value</code> est une chaîne de caractères et non un nombre, nous devons d’abord le convertir avec <code>parseInt()</code>. Pour ensuite récupérer l’index (et non l’année), il suffit de retrancher la valeur de la première année de la série, 1950.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> year_idx <span class="op">=</span> <span class="at">parseInt</span>(<span class="va">document</span>.<span class="at">getElementById</span>(<span class="st">&quot;year_slider&quot;</span>).<span class="at">value</span>)<span class="op">-</span><span class="dv">1950</span><span class="op">;</span></code></pre></div>
+<p>Mettre à jour l’année devient relativement simple. Il suffit d’ajouter un nouveau listener qui modifie la variable <code>year</code>lorsque nous touchons au slider. L’événement que l’on souhaite écouter s’appelle <code>input</code>. On exécute alors la fonction <code>update()</code> définie précédemment.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;#year_slider&quot;</span>).<span class="at">on</span>(<span class="st">&quot;input&quot;</span><span class="op">,</span> <span class="kw">function</span> () <span class="op">{</span>
+    year_idx <span class="op">=</span> <span class="at">parseInt</span>(<span class="kw">this</span>.<span class="at">value</span>) <span class="op">-</span> <span class="dv">1950</span><span class="op">;</span>
+    <span class="at">update</span>()<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>Jusqu’ici la fonction update ne sait que gérer des ajouts et des suppressions de données, avec <code>.enter</code> et <code>.exit</code>; que faire lorsque des données évoluent? En plus de <code>d3.enter()</code> et <code>d3.exit()</code>, D3 offre <code>d3.transition</code> qui permet de gérer la mise à jour des données**. Mais d’abord il faut définir comment on passe d’une valeur à la suivante. Nous pouvons souhaiter faire une interpolation linéaire des valeurs sur une durée de 200ms, comme ceci:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">dot</span>.<span class="at">transition</span>().<span class="at">ease</span>(<span class="st">&quot;linear&quot;</span>).<span class="at">duration</span>(<span class="dv">200</span>)<span class="op">;</span></code></pre></div>
+<p>Il reste à dire vers quelle valeur on va effectuer la transition. Pour cela, déplaçons le bout de code qui met à jour le cercle, en le retirant de <code>enter()</code> pour le mettre dans la partie <code>transition()</code>. Et, à la place de l’index en dur pour aller chercher l’année, on va se baser sur la valeur de <code>year_idx</code>, qui a été mise à jour un peu avant dans notre listener.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">dot</span>.<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;circle&quot;</span>).<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span><span class="st">&quot;dot&quot;</span>)
+        .<span class="at">style</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">colorScale</span>(<span class="va">d</span>.<span class="at">region</span>)<span class="op">;</span> <span class="op">}</span>)<span class="op">;</span>
+<span class="va">dot</span>.<span class="at">exit</span>().<span class="at">remove</span>()<span class="op">;</span>
+<span class="va">dot</span>.<span class="at">transition</span>().<span class="at">ease</span>(<span class="st">&quot;linear&quot;</span>).<span class="at">duration</span>(<span class="dv">200</span>)
+                .<span class="at">attr</span>(<span class="st">&quot;cx&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">xScale</span>(<span class="va">d</span>.<span class="at">income</span>[year_idx])<span class="op">;</span> <span class="op">}</span>) <span class="co">// voici comment attr sait quelle donnée il doit considérer</span>
+                .<span class="at">attr</span>(<span class="st">&quot;cy&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">yScale</span>(<span class="va">d</span>.<span class="at">lifeExpectancy</span>[year_idx])<span class="op">;</span> <span class="op">}</span>)
+                .<span class="at">attr</span>(<span class="st">&quot;r&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">rScale</span>(<span class="va">d</span>.<span class="at">population</span>[year_idx])<span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<div id="dautres-fonctions-de-transition-sont-possibles" class="callout panel panel-info">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pushpin"></span>Other transition functions you might want</h2>
+<h2 id="dautres-fonctions-de-transition-sont-possibles" class="callout panel panel-info"><span class="glyphicon glyphicon-pushpin"></span>D’autres fonctions de transition sont possibles</h2>
 </div>
 <div class="panel-body">
 <ul>
-<li>sin - applies the trigonometric function sin.</li>
-<li>exp - raises 2 to a power based on t.</li>
-<li>bounce - simulates a bouncy collision.</li>
-<li>elastic(a, p) - simulates an elastic band; may extend slightly beyond 0 and 1.</li>
-<li><a href="https://github.com/mbostock/d3/wiki/Transitions#d3_ease">more here</a></li>
+<li>sin - applique la fonction trigonométrique sinus().</li>
+<li>exp - exponentielle.</li>
+<li>bounce - simule une collision avec un rebond.</li>
+<li>elastic(a, p) - simulates un élastique; cette fonction peut dépasser un peu des bornes 0 et 1.</li>
+<li><a href="https://github.com/mbostock/d3/wiki/Transitions#d3_ease">pour en savoir plus</a></li>
 </ul>
 </div>
 </div>
-<div id="play-time" class="challenge panel panel-success">
+<div id="cest-lheure-de-samuser" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>Play time</h1>
+<h1 id="cest-lheure-de-samuser" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>C’est l’heure de s’amuser</h1>
 </div>
 <div class="panel-body">
-<p>D3 is incredible versatile. Try out different transitions and if you have time, maybe try drawing rectangles instead of circles.</p>
+<p>D3 est incroyablement versatile. ESsayez différentes transitions et, si vous avez du temps, voyez comment dessiner des rectangles à la place des cercles.</p>
 </div>
 </div>
-<p>Next, we might want to create a tooltip. Let's go have a look at what's already out there. The creator of D3 has put up some code for pretty much everything you can imagine. The example for a simple tooltip can be found <a href="http://bl.ocks.org/biovisualize/1016860">here</a>. We need to first create the variable tooltip:</p>
-<pre class="js"><code>var tooltip = d3.select(&quot;body&quot;)
-    .append(&quot;div&quot;)
-    .style(&quot;position&quot;, &quot;absolute&quot;)  
-    .style(&quot;visibility&quot;, &quot;hidden&quot;);</code></pre>
-<p>and then create event listeners for moving the mouse into a circle and out of one. Different from the example on the web page, we want to display the specific country we are looking at. When we move the mouse, we want the tool tip to move with it. And the moment we leave a circle, we want the tool tip to hide again.</p>
-<pre class="js"><code>dot.enter().append(&quot;circle&quot;).attr(&quot;class&quot;,&quot;dot&quot;)                        
-            .style(&quot;fill&quot;, function(d) { return colorScale(d.region); })
-            .on(&quot;mouseover&quot;, function(d){return tooltip.style(&quot;visibility&quot;, &quot;visible&quot;).text(d.name);})
-            .on(&quot;mousemove&quot;, function(){return tooltip.style(&quot;top&quot;, (d3.event.pageY-10)+&quot;px&quot;).style(&quot;left&quot;,(d3.event.pageX+10)+&quot;px&quot;);})
-            .on(&quot;mouseout&quot;, function(){return tooltip.style(&quot;visibility&quot;, &quot;hidden&quot;);});</code></pre>
-<div id="we-have-used-some-special-objects-given-to-us-by-the-browser" class="callout panel panel-info">
+<p>Ensuite, nous voulons créer un pop-up. Regardons un peu ce qui existe déjà sur internet. Il existe beaucoup d’exemples de code utilisant D3. Voici un exemple de <a href="http://bl.ocks.org/biovisualize/1016860">simple pop-up</a>. Pour suivre cet exemple nous commençons par créer la variable tooltip:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> tooltip <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;body&quot;</span>)
+    .<span class="at">append</span>(<span class="st">&quot;div&quot;</span>)
+    .<span class="at">style</span>(<span class="st">&quot;position&quot;</span><span class="op">,</span> <span class="st">&quot;absolute&quot;</span>)  
+    .<span class="at">style</span>(<span class="st">&quot;visibility&quot;</span><span class="op">,</span> <span class="st">&quot;hidden&quot;</span>)<span class="op">;</span></code></pre></div>
+<p>puis nous créons un listener pour les événements de survol des cercles avec la souris. Le code cidessous permet d’afficher le pays que l’on survole, le pop-up va suivre le mouvement de la souris, et quand on quitte le cercle, le popup doit disparaître.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">dot</span>.<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;circle&quot;</span>).<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span><span class="st">&quot;dot&quot;</span>)                        
+            .<span class="at">style</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">colorScale</span>(<span class="va">d</span>.<span class="at">region</span>)<span class="op">;</span> <span class="op">}</span>)
+            .<span class="at">on</span>(<span class="st">&quot;mouseover&quot;</span><span class="op">,</span> <span class="kw">function</span>(d)<span class="op">{</span><span class="cf">return</span> <span class="va">tooltip</span>.<span class="at">style</span>(<span class="st">&quot;visibility&quot;</span><span class="op">,</span> <span class="st">&quot;visible&quot;</span>).<span class="at">text</span>(<span class="va">d</span>.<span class="at">name</span>)<span class="op">;}</span>)
+            .<span class="at">on</span>(<span class="st">&quot;mousemove&quot;</span><span class="op">,</span> <span class="kw">function</span>()<span class="op">{</span><span class="cf">return</span> <span class="va">tooltip</span>.<span class="at">style</span>(<span class="st">&quot;top&quot;</span><span class="op">,</span> (<span class="va">d3</span>.<span class="va">event</span>.<span class="at">pageY</span><span class="dv">-10</span>)<span class="op">+</span><span class="st">&quot;px&quot;</span>).<span class="at">style</span>(<span class="st">&quot;left&quot;</span><span class="op">,</span>(<span class="va">d3</span>.<span class="va">event</span>.<span class="at">pageX</span><span class="dv">+10</span>)<span class="op">+</span><span class="st">&quot;px&quot;</span>)<span class="op">;}</span>)
+            .<span class="at">on</span>(<span class="st">&quot;mouseout&quot;</span><span class="op">,</span> <span class="kw">function</span>()<span class="op">{</span><span class="cf">return</span> <span class="va">tooltip</span>.<span class="at">style</span>(<span class="st">&quot;visibility&quot;</span><span class="op">,</span> <span class="st">&quot;hidden&quot;</span>)<span class="op">;}</span>)<span class="op">;</span></code></pre></div>
+<div id="nous-avons-exploité-différents-objets-donnés-par-le-navigateur" class="callout panel panel-info">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pushpin"></span>We have used some special objects given to us by the browser</h2>
+<h2 id="nous-avons-exploité-différents-objets-donnés-par-le-navigateur" class="callout panel panel-info"><span class="glyphicon glyphicon-pushpin"></span>Nous avons exploité différents objets donnés par le navigateur</h2>
 </div>
 <div class="panel-body">
 <ul>
-<li>document.x - selecting things within the page (getElementById)</li>
-<li>console.x - interact with the browser's console (log)</li>
-<li>event.x - only interesting in the scope of an event like &quot;mouseover&quot;, &quot;mousemove&quot;, &quot;keydown&quot;. Returns information about the event (pageX - where on the page did this event occur?).</li>
+<li>document.x - sélectionner des choses sur la page (getElementById)</li>
+<li>console.x - afficher un élément dans la console (log)</li>
+<li>event.x - dans le cadre d’un événement comme “mouseover”, &quot;mousemove&quot;, ou “keydown”. Renvoie des détails sur l’événement (pageX - où cet événement s’est-il produit dans la page?).</li>
 </ul>
 </div>
 </div>
-<p>Like any programming language, JavaScript can also be used to evaluate summary statistics of our data. As an example, let's compute the mean life expectancy and income for the different regions.</p>
-<p>First, we need to loop through all the data and group them by the region they are in:</p>
-<pre class="js"><code>// Calculate the averages for each region.
-var region_names = [&quot;Sub-Saharan Africa&quot;, &quot;South Asia&quot;, &quot;Middle East &amp; North Africa&quot;, &quot;America&quot;, &quot;East Asia &amp; Pacific&quot;, &quot;Europe &amp; Central Asia&quot;];
+<p>Comme tout langage de programmation, Javascript peut aussi servir à faire des calculs statistiques avec nos données. Comme exemple, calculons la moyenne de l’espérance de vie et du revenu par habitant dans les différentes régions.</p>
+<p>On commence par faire le tour des pays en les groupant par région:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="co">// Calculate the averages for each region.</span>
+<span class="kw">var</span> region_names <span class="op">=</span> [<span class="st">&quot;Sub-Saharan Africa&quot;</span><span class="op">,</span> <span class="st">&quot;South Asia&quot;</span><span class="op">,</span> <span class="st">&quot;Middle East &amp; North Africa&quot;</span><span class="op">,</span> <span class="st">&quot;America&quot;</span><span class="op">,</span> <span class="st">&quot;East Asia &amp; Pacific&quot;</span><span class="op">,</span> <span class="st">&quot;Europe &amp; Central Asia&quot;</span>]<span class="op">;</span>
 
-var region_data = [];
-for (var i in region_names) {
-    var filtered_nations_by_regions = nations.filter(function(nation){
-        return (nation.region == region_names[i]); 
-    });
-    region_data[i] = calc_mean(filtered_nations_by_regions);
-}
+<span class="kw">var</span> region_data <span class="op">=</span> []<span class="op">;</span>
+<span class="cf">for</span> (<span class="kw">var</span> i <span class="kw">in</span> region_names) <span class="op">{</span>
+    <span class="kw">var</span> filtered_nations_by_regions <span class="op">=</span> <span class="va">nations</span>.<span class="at">filter</span>(<span class="kw">function</span>(nation)<span class="op">{</span>
+        <span class="cf">return</span> (<span class="va">nation</span>.<span class="at">region</span> <span class="op">==</span> region_names[i])<span class="op">;</span> 
+    <span class="op">}</span>)<span class="op">;</span>
+    region_data[i] <span class="op">=</span> <span class="at">calc_mean</span>(filtered_nations_by_regions)<span class="op">;</span>
+<span class="op">}</span>
 
-var filtered_reg_nations = region_data.map(function(region) { return region;});</code></pre>
-<p>Next, we write a function that returns an array of objects region_data. We want it to contain the mean income and life for each year across all nations, weighted by population.</p>
-<pre class="js"><code>function calc_mean(region_data) {
-    var mean_income = [];
-    var mean_lifeExpectancy = [];
+<span class="kw">var</span> filtered_reg_nations <span class="op">=</span> <span class="va">region_data</span>.<span class="at">map</span>(<span class="kw">function</span>(region) <span class="op">{</span> <span class="cf">return</span> region<span class="op">;}</span>)<span class="op">;</span></code></pre></div>
+<p>Ensuite, on crée une fonction qui renvoie un tableau d’objets region_data. On souhaite qu’il contienne la moyenne du revenu par habitant et de l’espérance de vie année par année, à travers toutes les nations, pondérées par la population.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">calc_mean</span>(region_data) <span class="op">{</span>
+    <span class="kw">var</span> mean_income <span class="op">=</span> []<span class="op">;</span>
+    <span class="kw">var</span> mean_lifeExpectancy <span class="op">=</span> []<span class="op">;</span>
 
-    for (var year_idx2 in region_data[0].years) {
-        var sum_income = 0;
-        var sum_lifeExpectancy = 0;
-        var sum_population = 0;
+    <span class="cf">for</span> (<span class="kw">var</span> year_idx2 <span class="kw">in</span> region_data[<span class="dv">0</span>].<span class="at">years</span>) <span class="op">{</span>
+        <span class="kw">var</span> sum_income <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+        <span class="kw">var</span> sum_lifeExpectancy <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
+        <span class="kw">var</span> sum_population <span class="op">=</span> <span class="dv">0</span><span class="op">;</span>
 
-        for (var k in region_data) {
-            var kpop = region_data[k].population[year_idx2];
-            var kincome = region_data[k].income[year_idx2];
-            var klife = region_data[k].lifeExpectancy[year_idx2];
-            sum_income += kpop*kincome; 
-            sum_lifeExpectancy += kpop*klife;
-            sum_population += kpop;             
-        }
+        <span class="cf">for</span> (<span class="kw">var</span> k <span class="kw">in</span> region_data) <span class="op">{</span>
+            <span class="kw">var</span> kpop <span class="op">=</span> region_data[k].<span class="at">population</span>[year_idx2]<span class="op">;</span>
+            <span class="kw">var</span> kincome <span class="op">=</span> region_data[k].<span class="at">income</span>[year_idx2]<span class="op">;</span>
+            <span class="kw">var</span> klife <span class="op">=</span> region_data[k].<span class="at">lifeExpectancy</span>[year_idx2]<span class="op">;</span>
+            sum_income <span class="op">+=</span> kpop<span class="op">*</span>kincome<span class="op">;</span> 
+            sum_lifeExpectancy <span class="op">+=</span> kpop<span class="op">*</span>klife<span class="op">;</span>
+            sum_population <span class="op">+=</span> kpop<span class="op">;</span>             
+        <span class="op">}</span>
 
-        mean_income[year_idx2] = sum_income/sum_population;
-        mean_lifeExpectancy[year_idx2] = sum_lifeExpectancy/sum_population;
-    }
-    averageData = {
-        region: region_data[0].region,
-        years: region_data[0].years,
-        mean_income: mean_income,
-        mean_lifeExpectancy: mean_lifeExpectancy
-    };
+        mean_income[year_idx2] <span class="op">=</span> sum_income/sum_population<span class="op">;</span>
+        mean_lifeExpectancy[year_idx2] <span class="op">=</span> sum_lifeExpectancy/sum_population<span class="op">;</span>
+    <span class="op">}</span>
+    averageData <span class="op">=</span> <span class="op">{</span>
+        <span class="dt">region</span><span class="op">:</span> region_data[<span class="dv">0</span>].<span class="at">region</span><span class="op">,</span>
+        <span class="dt">years</span><span class="op">:</span> region_data[<span class="dv">0</span>].<span class="at">years</span><span class="op">,</span>
+        <span class="dt">mean_income</span><span class="op">:</span> mean_income<span class="op">,</span>
+        <span class="dt">mean_lifeExpectancy</span><span class="op">:</span> mean_lifeExpectancy
+    <span class="op">};</span>
 
-    return averageData;
-}</code></pre>
-<div id="the-master-challenge" class="challenge panel panel-success">
+    <span class="cf">return</span> averageData<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<div id="le-grand-défi" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>The master challenge</h1>
+<h1 id="le-grand-défi" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Le grand défi</h1>
 </div>
 <div class="panel-body">
-<p>It's time to put together everything you've learned. Write code that displays (and updates) the mean values that we just computed as little crosses in the graph for the different regions.</p>
+<p>Il est temps de mettre ensemble tout ce que nous avons appris. Ecrire du code qui affiche (et met à jour) les valeurs moyennes que nous venons de calculer sous forme de petites croix dans le graphique, une croix figurant chaque région.</p>
 </div>
 </div>
 <div id="style" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>...style!</h1>
+<h1 id="style" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>...style!</h1>
 </div>
 <div class="panel-body">
-<p>Add axis labels and make the fonts pretty.</p>
+<p>Ajouter des étiquettes aux axes et choisir de jolies polices de caractères.</p>
 </div>
 </div>
-<div id="using-different-data-formats" class="challenge panel panel-success">
+<div id="utiliser-dautres-formats-de-données" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>Using different data formats</h1>
+<h1 id="utiliser-dautres-formats-de-données" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Utiliser d’autres formats de données</h1>
 </div>
 <div class="panel-body">
-<p>What if you don't have your data in JSON format? Change your code to load in nations.csv instead of nations.json and have it produce the same plot.</p>
+<p>Essayer de charger nations.csv à la place de nations.json - pour produire le même graphique.</p>
 </div>
 </div>
-<p>By the end of this lesson, your page should look something like this:</p>
-<iframe src="http://isakiko.github.io/D3-visualising-data/code/index10.html" width="1000" height="600"></iframe>
+<p>À la fin de cette leçon, votre page doit resembler à ceci:</p>
+<iframe src="http://isakiko.github.io/D3-visualising-data/code/index10.html" width="1000" height="600">
+</iframe>
         </div>
       </div>
       <div class="footer">

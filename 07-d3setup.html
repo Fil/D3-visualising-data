@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
-    <title>Software Carpentry: D3 setup</title>
+    <title>Software Carpentry: Mise en place de D3</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
@@ -25,110 +25,112 @@
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h1 class="title">D3 setup</h1>
-          <h2 class="subtitle">Setting up html for our data visualisation</h2>
-<div id="learning-objectives" class="objectives panel panel-warning">
+          <h1 class="title">Mise en place de D3</h1>
+          <h2 class="subtitle">Un peu de html pour notre visualisation de données</h2>
+<div id="objectifs-de-la-leçon" class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+<h2 id="objectifs-de-la-leçon" class="objectives panel panel-warning"><span class="glyphicon glyphicon-certificate"></span>Objectifs de la leçon</h2>
 </div>
 <div class="panel-body">
 <ul>
-<li>Setting up an html file to contain the plot</li>
-<li>Reading in data from a given <code>.json</code> file</li>
-<li>Structuring the html content</li>
+<li>Créer un fichier HTML qui contiendra le graphique</li>
+<li>Lire des données à partir d’un fichier <code>.json</code></li>
+<li>Structurer le contenu HTML</li>
 </ul>
 </div>
 </div>
-<p>We've finally learned everything we need to know to start using D3. D3 is a JavaScript library. This means that we can use all of the JavaScript commands that we have already learned, but on top of these, there are a few new functions that will make our life easier.</p>
-<p>The main purpose of D3 is to create visualisations of data online. Because it uses JavaScript, it is possible to make graphs interactive!</p>
-<p>As a little refresher, we will repeat a little bit html to set up our page.</p>
-<p>Create a new GitHub repository and create a gh-pages branch to which you commit. This is, where our actual page will live. Then create <code>index.html</code> in the new repository containing the following:</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
+<p>Avec tout ce que nous avons vu précédemment, nous pouvons désormais commencer à utiliser D3. D3 est une bibliothèque Javascript. Il s’agit d’un ensemble de fonctions que l’on rajoute aux commandes Javascript que l’on connaît déjà, et qui nous facilitent la vie.</p>
+<p>Le but principal de D3 est de créer des visualisations en ligne. Comme il est écrit en Javascript, ces visualisations pourront facilement être interactives!</p>
+<p>Mais commençons par mettre en place notre page HTML.</p>
+<p>Créez un nouveau repository sur GitHub, et une branche gh-pages branch dans laquelle nous allons commiter. C’est là que se trouvera notre page. Puis créez <code>index.html</code> dans le nouveau repository, avec le contenu suivant:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html&gt;</span>
   <span class="kw">&lt;head&gt;</span>
-    <span class="kw">&lt;title&gt;</span>The Wealth <span class="er">&amp;</span> Health of Nations<span class="kw">&lt;/title&gt;</span>
+    <span class="kw">&lt;title&gt;</span>Richesse <span class="er">&amp;</span> Santé des Nations<span class="kw">&lt;/title&gt;</span>
     <span class="kw">&lt;link</span><span class="ot"> rel=</span><span class="st">&quot;stylesheet&quot;</span><span class="ot"> type=</span><span class="st">&quot;text/css&quot;</span><span class="ot"> href=</span><span class="st">&quot;main.css&quot;</span> <span class="kw">/&gt;</span>
   <span class="kw">&lt;/head&gt;</span>
   <span class="kw">&lt;body&gt;</span>
 
-    <span class="kw">&lt;h1&gt;</span>The Wealth <span class="er">&amp;</span> Health of Nations<span class="kw">&lt;/h1&gt;</span>
+    <span class="kw">&lt;h1&gt;</span>Richesse <span class="er">&amp;</span> Santé des Nations<span class="kw">&lt;/h1&gt;</span>
 
     <span class="kw">&lt;p</span><span class="ot"> id=</span><span class="st">&quot;chart_area&quot;</span><span class="kw">&gt;&lt;/p&gt;</span>
 
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;http://d3js.org/d3.v3.min.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
     <span class="kw">&lt;script</span><span class="ot"> src=</span><span class="st">&quot;main.js&quot;</span><span class="kw">&gt;&lt;/script&gt;</span>
   <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre>
-<p>There are a few things in this file that look new: <code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;main.css&quot; /&gt;</code> is linking the local CSS file <code>main.css</code>(that can just be an empty file for now). <code>&lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;</code> is linking the JavaScript file, the file in which all the action will happen.</p>
-<p>Additionally, we now need to link d3 using <code>&lt;script src=&quot;http://d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;</code>. The order matters. Since code is executed sequentially and we want to use parts of the D3 library in our own script, we have to link to d3.js first.</p>
-<p>The last bit, that's important here is an HTML element (paragraph) we create. We give it an id <code>chart_area</code>. This is the area we reserve for our pretty chart. We will use JavaScript (and D3) to fill it in.</p>
-<p>Now, let's write main.js.</p>
-<p>Similar to the syntax we've already seen (<code>JSON.stringify</code>), D3-specific functions can be called using a <code>d3.</code>-syntax.</p>
-
-<p>The first thing we need, is of course our data, which we can find at <a href="https://raw.githubusercontent.com/IsaKiko/D3-visualising-data/gh-pages/code/nations.json">https://raw.githubusercontent.com/IsaKiko/D3-visualising-data/gh-pages/code/nations.json</a>. D3 provides a handy function to read in <code>json</code>-files:
+<span class="kw">&lt;/html&gt;</span></code></pre></div>
+<p>Il y a plusieurs nouveautés dans ce fichier: <code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;main.css&quot; /&gt;</code> crée un lien vers le fichier css local <code>main.css</code>(qu’on peut laisser vide pour le moment). <code>&lt;script src=&quot;main.js&quot;&gt;&lt;/script&gt;</code> appelle le fichier Javascript dans lequel l’action va se dérouler.</p>
+<p>De plus, nous créons un lien vers la bibliothèque d3 en appelant <code>&lt;script src=&quot;http://d3js.org/d3.v3.min.js&quot;&gt;&lt;/script&gt;</code>. L’ordre est important. Notre script faisant appel aux fonctions définies dans D3, le lien vers d3.js doit apparaître avant l’appel de notre propre script.</p>
+<p>Dernier point, il est important de créer un élément HTML (un paragraphe). Nous lui donnons l’identifiant <code>chart_area</code>. C’est l’emplacement que l’on réserve pour notre joli graphique. Nous allons utiliser Javascript (et D3) pour le remplir.</p>
+<p>Maintenant, il s’agit d’écrire le script main.js.</p>
+<p>La syntaxe des fonctions de D3 utilise <code>d3.xxx</code>, tout comme d’autres fonctions Javascript (par exemple <code>JSON.stringify</code>).</p>
+<p>La première chose dont nous avons besoin, c’est nos données, qui se trouvent à l’adresse 'https://raw.githubusercontent.com/IsaKiko/D3-visualising-data/gh-pages/code/nations.json'. D3 offre une function très pratique pour lire des fichiers au format <code>json</code>:</p>
 <pre class="d3"><code>var dataUrl = &quot;https://raw.githubusercontent.com/IsaKiko/D3-visualising-data/gh-pages/code/nations.json&quot;;
 d3.json(dataUrl, function(nations) { })</code></pre>
-<p>This line probably needs a little explanation and we'll go through it bit by bit:</p>
+<p>Cette ligne demande quelques éclaircissements, et nous allons la parcourir pas à pas:</p>
 <ul>
-<li><code>d3.json()</code> is called the function call. In this case, we have a function that reads in a json file, parses it, and is also able to do something with the parsed data on the way.</li>
-<li>The first argument <code>dataUrl</code> tells the function where to get the data we want to have parsed.</li>
-<li><code>function(...){...}</code> is called the callback function. It is a so-called 'inline' function, which means it has no name (we're only operating in the object space here). This also means we can't use this function anywhere else in our code. The code we put inside the curly brackets is the code that's run once d3.json() is called and the data is loaded.</li>
-<li>D3 assigns the name <code>nations</code> to the parsed object it returns. We can only use 'nations' within the callback function, this means our code only knows of <code>nations</code> inside the curly brackets.</li>
-<li>What seems unusual, but is actually quite common, is that this function call doesn't return anything. It is simply executed and displayed (if we tell it to), but no value is returned.</li>
+<li><code>d3.json()</code> est l’appel de la fonction. Dans ce cas, nous avons une fonction qui lit un fichier JSON, l’analyse, et envoie les résultats à une fonction callback.</li>
+<li>Son premier argument <code>dataUrl</code> indique où se trouvent les données que nous voulons lire.</li>
+<li><code>function(...){...}</code> est une fonction de rappel (callback). Elle sera exécutée une fois que les données auront été chargées et analysées.</li>
+<li>D3 crée une variable nommée <code>nations</code>, qui contiendra l’objet analysé par la fonction. Cette variable 'nations' n’est disponible qu’à l’intérieur de la fonction de rappel; autrement dit le code ne connaît ces valeurs qu’à l’intérieur de ces accolades.</li>
+<li>Il faut noter que cette fonction ne renvoie rien. Elle est exécutée et lance ensuite, de manière asynchrone, une fonction de rappel qui s’exécutera à son tour quand les données auront été chargées, et pourra faire des affichages.</li>
 </ul>
-<div id="what-else-can-i-read-in-conveniently" class="callout panel panel-info">
+<div id="quels-autres-formats-de-données-sont-accesibles-facilement" class="callout panel panel-info">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pushpin"></span>What else can I read in conveniently?</h2>
+<h2 id="quels-autres-formats-de-données-sont-accesibles-facilement" class="callout panel panel-info"><span class="glyphicon glyphicon-pushpin"></span>Quels autres formats de données sont accesibles facilement?</h2>
 </div>
 <div class="panel-body">
-<p>D3 offers the possibility to also read in csv (comma-separated values) files directly. See <a href="https://github.com/mbostock/d3/wiki/CSV">here</a> for an example. Also available are functions to read in tab-separated values (tsv) and files with arbitrary delimiter (dsv).</p>
+<p>D3 offre la possibilité de lire directement des fichiers CSV (valeurs séparées par des virgules). Voir <a href="https://github.com/mbostock/d3/wiki/CSV">cette page</a> pour un exemple. D’autres fonctions permettent de lire des fichiers de données séparées par des tabulations (tsv) ou un autre délimiteur arbitraire (dsv).</p>
 </div>
 </div>
-<p>So naturally, the next step is to think about what we want to happen between the curly brackets. For now, we want to:</p>
+<p>La question désormais est de réfléchir à ce que nous voulons effectuer à l’intérieur de ces accolades, là où nous venons de récupérer des données. Dans un premier temps, nous allons essayer de:</p>
 <ul>
-<li>Link JavaScript to HTML page</li>
-<li>Insert an SVG canvas</li>
-<li>Create axes (x: income per capita, y: life expectancy)</li>
-<li>Display data points (scatter plot)</li>
+<li>Associer le Javascript à la page HTML</li>
+<li>Créer un fonds SVG</li>
+<li>Créer des axes (x: revenu par habitant, y: espérance de vie)</li>
+<li>Afficher des points représentant les données (scatter plot/nuage de points)</li>
 </ul>
-<p>First, let's draw a little schematic of how we want the page to be structured.</p>
-<p><img src="img/chart_area.png" alt="What we want.." width="700" /></p>
-<p>We already set up our HTML page to contain a chart area. That's the space we want to fill now. We'll have a picture frame (an SVG-element), our drawing area (a g-element), and in that drawing area, we'll have separate elements for both axes and the area for our circles.</p>
-<p>What we now want to end up with in our html document is this:</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;p</span><span class="ot"> id=</span><span class="st">&quot;chart_area&quot;</span><span class="kw">&gt;</span> <span class="kw">&lt;svg&gt;</span> <span class="kw">&lt;/svg&gt;</span> <span class="kw">&lt;/p&gt;</span></code></pre>
-<p>But this time, we want to create these elements automatically using JavaScript only. First, we need to link the JavaScript and HTML environment so that we have writing access to the HTML. To do this, we use the <code>.select()</code>. This lets us grab an element by specifying its ID.</p>
-<pre class="js"><code>// Select the chart area by ID 
-var chart_area = d3.select(&quot;#chart_area&quot;);</code></pre>
-<p>Now we're setting up the grid by appending the chart area by the SVG picture frame.</p>
-<pre class="js"><code>var frame = chart_area.append(&quot;svg&quot;);</code></pre>
-<p>in the HTML file. We chose to append because we now have access to the SVG element without the need to seperately select it by ID.</p>
-<p>We also create the canvas inside the frame:</p>
-<pre class="js"><code>// Create canvas inside frame.
-var canvas = frame.append(&quot;g&quot;);</code></pre>
-<p>Let's set up the dimensions for our elements that we want to use:</p>
-<pre class="js"><code>// Set margins, width, and height.
-var margin = {top: 19.5, right: 19.5, bottom: 19.5, left: 39.5};
-var frame_width = 960;
-var frame_height = 350;
-var canvas_width = frame_width - margin.left - margin.right;
-var canvas_height = frame_height - margin.top - margin.bottom;</code></pre>
-<p>...and apply them to the actual elements:</p>
-<pre class="js"><code>// Set frame attributes width and height.
-frame.attr(&quot;width&quot;, frame_width);
-frame.attr(&quot;height&quot;, frame_height);</code></pre>
-<p>The canvas element will have to fit nicely into the frame. To make it fit, we set a transform attribute and use the translate function.</p>
-<pre class="js"><code>// Shift the canvas and make it slightly smaller than the svg canvas.
-canvas.attr(&quot;transform&quot;, &quot;translate(&quot; + margin.left + &quot;,&quot; + margin.top + &quot;)&quot;);</code></pre>
-<div id="adding-svgs-from-javascript-file" class="challenge panel panel-success">
+<p>Commençons par un petit schéma de la page que nous voulons obtenir.</p>
+<p><img src="img/chart_area.png" alt="Ce que nous voulons obtenir..." width="700" /></p>
+<p>Notre page HTML contient déjà l’emplacement où l’on va ajouter notre zone de graphique. Nous allons y créer un fonds SVG (un élément SVG), une zone de tracé (un élément g), et, dans cette zone, deux éléments distincts, deux « calques », qui recevront respectivement les axes pour l’un, et les cercles pour l’autre.</p>
+<p>Dans un premier temps, nous voulons donc obtenir ceci:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;p</span><span class="ot"> id=</span><span class="st">&quot;chart_area&quot;</span><span class="kw">&gt;</span> <span class="kw">&lt;svg&gt;</span> <span class="kw">&lt;/svg&gt;</span> <span class="kw">&lt;/p&gt;</span></code></pre></div>
+<p>Mais cette fois, nous allons créer ces éléments directement en Javascript. Pour relier le Javascript et l’environnement HTML, nous utilisons la fonction <code>d3.select()</code>. Ceci nous permet d’attraper un élément, en précisant son identifiant.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="co">// Sélectionner la zone de graphique avec son ID </span>
+<span class="kw">var</span> chart_area <span class="op">=</span> <span class="va">d3</span>.<span class="at">select</span>(<span class="st">&quot;#chart_area&quot;</span>)<span class="op">;</span></code></pre></div>
+<p>Maintenant on ajoute le cadre SVG.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> frame <span class="op">=</span> <span class="va">chart_area</span>.<span class="at">append</span>(<span class="st">&quot;svg&quot;</span>)<span class="op">;</span></code></pre></div>
+<p>Le résultat est mémorisé dans la variable <code>frame</code>, ce qui fait qu’on pourra le référencer sans avoir à le sélectionner par son identifiant.</p>
+<p>On crée alors dans cet élément SVG le groupe <code>g</code> qui contiendra le graphique:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="co">// Créer le fonds dans le cadre.</span>
+<span class="kw">var</span> canvas <span class="op">=</span> <span class="va">frame</span>.<span class="at">append</span>(<span class="st">&quot;g&quot;</span>)<span class="op">;</span></code></pre></div>
+<p>Fixons maintenant les dimensions de nos éléments:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="co">// Régler les marges, largeur, hauteur.</span>
+<span class="kw">var</span> margin <span class="op">=</span> <span class="op">{</span><span class="dt">top</span><span class="op">:</span> <span class="fl">19.5</span><span class="op">,</span> <span class="dt">right</span><span class="op">:</span> <span class="fl">19.5</span><span class="op">,</span> <span class="dt">bottom</span><span class="op">:</span> <span class="fl">19.5</span><span class="op">,</span> <span class="dt">left</span><span class="op">:</span> <span class="fl">39.5</span><span class="op">};</span>
+<span class="kw">var</span> frame_width <span class="op">=</span> <span class="dv">960</span><span class="op">;</span>
+<span class="kw">var</span> frame_height <span class="op">=</span> <span class="dv">350</span><span class="op">;</span>
+<span class="kw">var</span> canvas_width <span class="op">=</span> frame_width <span class="op">-</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">right</span><span class="op">;</span>
+<span class="kw">var</span> canvas_height <span class="op">=</span> frame_height <span class="op">-</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">-</span> <span class="va">margin</span>.<span class="at">bottom</span><span class="op">;</span></code></pre></div>
+<p>…et les appliquer aux éléments définis:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="co">// Fixer les attributs  width et height du cadre.</span>
+<span class="va">frame</span>.<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> frame_width)<span class="op">;</span>
+<span class="va">frame</span>.<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> frame_height)<span class="op">;</span></code></pre></div>
+<p>Pour que le fonds (l’élément g) s’intègre bien dans le cadre, on le décale un petit peu, avec une marge, que l’on va préciser avec un attribut <code>transform: translate(…)</code>.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="co">// Décaler le fonds à l&#39;intérieur du cadre.</span>
+<span class="va">canvas</span>.<span class="at">attr</span>(<span class="st">&quot;transform&quot;</span><span class="op">,</span> <span class="st">&quot;translate(&quot;</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">left</span> <span class="op">+</span> <span class="st">&quot;,&quot;</span> <span class="op">+</span> <span class="va">margin</span>.<span class="at">top</span> <span class="op">+</span> <span class="st">&quot;)&quot;</span>)<span class="op">;</span>
+<span class="co">// Fixer sa taille</span>
+<span class="va">canvas</span>.<span class="at">attr</span>(<span class="st">&quot;width&quot;</span><span class="op">,</span> canvas_width)<span class="op">;</span>
+<span class="va">canvas</span>.<span class="at">attr</span>(<span class="st">&quot;height&quot;</span><span class="op">,</span> canvas_height)<span class="op">;</span></code></pre></div>
+<div id="ajouter-des-éléments-svgs-depuis-le-fichier-javascript" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>Adding SVGs from JavaScript file</h1>
+<h1 id="ajouter-des-éléments-svgs-depuis-le-fichier-javascript" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Ajouter des éléments SVGs depuis le fichier Javascript</h1>
 </div>
 <div class="panel-body">
 <ol style="list-style-type: decimal">
-<li>Add a SVG circle element to the frame.</li>
-<li>Once the circle reference is obtained, make the radius 40px, the border black and the colour green.</li>
+<li>Ajouter un élément <code>circle</code> SVG au cadre.</li>
+<li>Régler le rayon du cercle à 40px, son contour en noir et sa couleur de fond en vert.</li>
 </ol>
-<p>HINT: You can use the <code>attr</code> method on the circle object obtained.</p>
+<p>Indice: Vous pouvez utiliser la méthode <code>.attr</code> sur l’objet circle obtenu.</p>
 </div>
 </div>
         </div>

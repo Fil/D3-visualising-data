@@ -26,114 +26,116 @@
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <h1 class="title">JSON</h1>
-          <h2 class="subtitle">Everything is strings!</h2>
-<div id="learning-objectives" class="objectives panel panel-warning">
+          <h2 class="subtitle">Tout n’est que chaînes!</h2>
+<div id="objectifs-de-la-leçon" class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+<h2 id="objectifs-de-la-leçon" class="objectives panel panel-warning"><span class="glyphicon glyphicon-certificate"></span>Objectifs de la leçon</h2>
 </div>
 <div class="panel-body">
 <ul>
-<li>Understand JavaScript data types</li>
-<li>Converting JavaScript data to JSON format</li>
-<li>Converting JSON data to JavaScript format</li>
+<li>Comprendre les types de données de Javascript</li>
+<li>Convertir des données Javascript au format JSON</li>
+<li>Convertir des données JSON au format Javascript</li>
 </ul>
 </div>
 </div>
-<p>The goal of these lessons is to visualize data. So far we haven't really dealt with any specific data, let alone relatively big data files. In this lesson, we will learn about the basic data types used by JavaScript and also talk about ways to conveniently convert variables into a text file so we can store it.</p>
-<p>There are two containers in JavaScript: arrays (<code>[]</code>-notation) and objects (<code>{}</code>-notation).</p>
-<p>In order to create a container, we have to declare it first using the <code>var</code> keyword that we've already come across.</p>
-<pre class="js"><code>var list_of_numbers = [];</code></pre>
-<p>creates an array. But so far it’s empty.</p>
-<p>We can now add elements to this array but instead let's create it again with some values in it, like this:</p>
-<pre class="js"><code>var list_of_numbers = [30, 2, 5];</code></pre>
-<p>Let's use the console of the browser to look at the values of object by including some extra code:</p>
-<pre class="js"><code>console.log(list_of_numbers);</code></pre>
-<p>Or we can just address one field of the vector. Counting begins from zero, so the third field has the index '2'.</p>
-<pre class="js"><code>console.log(list_of_numbers[2]);</code></pre>
-<p><code>list_of_numbers</code> is a vector that holds 3 numbers. We can also have a variable that contains a string:</p>
-<pre class="js"><code>var text = &#39;I love cats.&#39;;</code></pre>
-<p>We can address this string by using indices, so <code>console.log(text[2])</code> returns <code>l</code>.</p>
-<p>Unlike arrays which allow you to access elements using their indices, JavaScript objects allow you to index elements using names. This lets us create something like this:</p>
-<pre class="js"><code>var cat_object = {
-    weight : 5,
-    past_weight_values : [4.5, 5.1, 4.9],
-    name : &#39;Princess Caroline&#39;
-};</code></pre>
-<div id="creating-new-attributes" class="challenge panel panel-success">
+<p>Le but de ce cours est de visualiser des données. Nous n’avons pas encore commencé à nous occuper de données particulières, sans même parler d’importants fichiers de données. Dans cette leçon nous allons voir les types de données de base utilisés par Javascript et évoquer divers moyens pratiques pour les convertir dans un fichier texte, afin de pouvoir les enregistrer.</p>
+<p>Il y a deux types de conteneurs en Javascript: les listes ou tableaux (notation <code>[]</code>) et les objets (notation <code>{}</code>).</p>
+<p>Pour créer un conteneur, il faut le déclarer d’abord avec le mot-clé <code>var</code>, que nous avons déjà rencontré.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> liste_de_nombres <span class="op">=</span> []<span class="op">;</span></code></pre></div>
+<p>crée un tableau. Pour l'instant, celui-ci est vide.</p>
+<p>On peut maintenant ajouter des éléments dans ce tableau, ou alors le faire dès la création du tableau, sous cette forme:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> liste_de_nombres <span class="op">=</span> [<span class="dv">30</span><span class="op">,</span> <span class="dv">2</span><span class="op">,</span> <span class="dv">5</span>]<span class="op">;</span></code></pre></div>
+<p>Utilisons la console du navigateur pour visualiser les valeurs de cet objet:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">console</span>.<span class="at">log</span>(liste_de_nombres)<span class="op">;</span></code></pre></div>
+<p>On peut aussi aller chercher le _x_ème élément du tableau. Comme on compte à partir de 0, le troisième champ a l’index '2'.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">console</span>.<span class="at">log</span>(liste_de_nombres[<span class="dv">2</span>])<span class="op">;</span></code></pre></div>
+<p><code>liste_de_nombres</code> est une liste de 3 nombres.</p>
+<p>À noter, une chaîne peut être vue comme une liste de lettres:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> text <span class="op">=</span> <span class="st">&#39;I love cats.&#39;</span><span class="op">;</span></code></pre></div>
+<p><code>console.log(text[2])</code> renverra <code>l</code>.</p>
+<p>Contrairement aux listes qui vous permettent d’accéder aux éléments par leur index, les objets Javascript permettent d’accéder aux propriétés (ou attributs) en utilisant des noms. Ce mécanisme permet de créer quelque chose du genre:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> cat_object <span class="op">=</span> <span class="op">{</span>
+    <span class="dt">weight </span><span class="op">:</span> <span class="dv">5</span><span class="op">,</span>
+    <span class="dt">past_weight_values </span><span class="op">:</span> [<span class="fl">4.5</span><span class="op">,</span> <span class="fl">5.1</span><span class="op">,</span> <span class="fl">4.9</span>]<span class="op">,</span>
+    <span class="dt">name </span><span class="op">:</span> <span class="st">&#39;Princess Caroline&#39;</span>
+<span class="op">};</span></code></pre></div>
+<div id="créer-de-nouveaux-attributs" class="challenge panel panel-success">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pencil"></span>Creating new attributes</h2>
+<h2 id="créer-de-nouveaux-attributs" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Créer de nouveaux attributs</h2>
 </div>
 <div class="panel-body">
-<p>You can append the list of attributes using the dot-syntax <code>cat_object.attributename = ...</code>, (<code>attributename</code> is a placeholder). Create a new attribute <code>height</code> and assign a number!</p>
+<p>On peut ajouter un attribut avec la syntaxe à point <code>cat_object . attributename = ...</code>, Créer un nouvel attribut <code>height</code> et affectez-lui une valeur!</p>
 </div>
 </div>
-<p>Sometimes we want to have a list of objects that we can address using an index. In our case, we might want to have a list of multiple cats. Now if we want a second cat, we can store them both in the same array <code>cat_list</code>. We can append to an array using the <code>push</code> function:</p>
-<pre class="js"><code>var cat_list = [cat_object]; // initializing with the first field being cat_object
-cat_list.push({weight : 6 , past_weight_values : [5.9, 5.3, 6.1], name : &#39;Snowball&#39;});</code></pre>
-<p>This process is called 'nesting'.</p>
+<p>On voudra ensuite prendre une liste d’objets ; on pourra alors extraire un objet de cette liste en demandant son index. Dans notre cas, on pourrait avoir un de multiple chats, sous forme d’une liste d’objets où chaque objet représenterait un chat. Pour ajouter une valeur (ou un objet) dans une liste, on utilise la fonction <code>push</code>:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> cat_list <span class="op">=</span> [cat_object]<span class="op">;</span> <span class="co">// la liste contient notre premier chat</span>
+<span class="va">cat_list</span>.<span class="at">push</span>(<span class="op">{</span><span class="dt">weight </span><span class="op">:</span> <span class="dv">6</span> <span class="op">,</span> <span class="dt">past_weight_values </span><span class="op">:</span> [<span class="fl">5.9</span><span class="op">,</span> <span class="fl">5.3</span><span class="op">,</span> <span class="fl">6.1</span>]<span class="op">,</span> <span class="dt">name </span><span class="op">:</span> <span class="st">&#39;Snowball&#39;</span><span class="op">}</span>)<span class="op">;</span> <span class="co">// ajout du second chat</span></code></pre></div>
+<p>Ce processus s’appelle 'nesting'.</p>
 <div id="nesting" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>Nesting</h1>
+<h1 id="nesting" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Nesting</h1>
 </div>
 <div class="panel-body">
 <ol style="list-style-type: decimal">
-<li>Append a third cat to the array, not entering a name or weight.</li>
-<li>Do all animals have to have the same attribute fields?</li>
-<li>Use the console of your browser to read the values of your object.</li>
+<li>Ajouter un troisième chat dans la liste, sans préciser son nom ni son poids.</li>
+<li>Les animaux doivent-ils tous avoir les mêmes attributs?</li>
+<li>Utiliser la console pour lire les valeur de vos objets.</li>
 </ol>
 </div>
 </div>
-<div id="object-space-and-name-space" class="challenge panel panel-success">
+<div id="attention-aux-références" class="challenge panel panel-success">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pencil"></span>Object space and name space</h2>
+<h2 id="attention-aux-références" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Attention aux références</h2>
 </div>
 <div class="panel-body">
-<p>Instead of pushing a new cat to the list, what happens if we initiate the list using cat_object twice?</p>
-<p>Reinitialise the list:</p>
-<pre class="js"><code>var cat_list2 = [cat_object, cat_object]; </code></pre>
+<p>Que se passe-t-il si l’on référence deux fois de suite le même chat dans la liste?</p>
+<p>Réinitialisons la liste:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> cat_list2 <span class="op">=</span> [cat_object<span class="op">,</span> cat_object]<span class="op">;</span> </code></pre></div>
 <ol style="list-style-type: decimal">
-<li>Change the name of the first cat object <code>cat_list2[0]</code>. Look at the whole list again (<code>cat_list2</code>). What happened?</li>
-<li>Look at cat_object. What's going on??</li>
+<li>Changeons le nom du premier chat <code>cat_list2[0]</code>. Regardons à nouveau la liste (<code>cat_list2</code>). Que s’est-il passé?</li>
+<li>Regardons l’objet initial cat_object. Que se passe-t-il?</li>
 </ol>
 </div>
 </div>
-<p>In Javascript, we have a name space and an object space. The name space contains the names of the variables, the object space contains the actual content. Normally, you would assume that each name points to one object (<code>cat_object.weight</code> --&gt; <code>5</code>, <code>cat_object.name</code> --&gt; 'Princess Caroline'). What we did, when we created our list is that we used three names to point to the same object (<code>cat_list[0]</code>, <code>cat_list[1]</code>, <code>cat_object</code> --&gt; <code>{weight = 5 , past_weight_values = [4.5, 5.1, 4.9], name = 'Princess Caroline'}</code>). When we changed the name of <code>cat_list2[0]</code>, what we actually did was changing the content of the one object <code>cat_object</code> that they were all pointing to.</p>
-<p><img src="img/namespace.png" alt="Name space and object space" width="500" /></p>
-<p>A good way of creating a new array (as in a new object, not just a new name for the same one) that relates to an array we already have can be done using the <code>map()</code> function.</p>
-<p>As an example, we can create a list of dogs that have the same names as our cats, only appended by &quot;Doggie&quot;.</p>
-<pre class="js"><code>dog_list = cat_list.map(function(cat) {
-    return {
-        name: &quot;Doggie &quot;+ cat.name
-    };
-});</code></pre>
-<p>When the map function is called using <code>cat_list.map</code>, it loops through all elements in <code>cat_list</code>, calls each temporarily <code>cat</code>, and creates a new list <code>dog_list</code>, which will have one dog per cat. We join the two strings with a simple <code>+</code>.</p>
-<div id="how-much-do-dogs-weigh" class="challenge panel panel-success">
+<p>En Javascript, il existe un espace des noms et un espace des objets. L’espace des noms contient les références des variables, tandis que l’espace des objets contient le contenu réel. Ainsi dans notre liste, plusieurs références (le nom du chat0, le nom du chat1), pointent vers le même objet. C’est cet objet que nous avons changé, et toutes les références continuent de pointer vers cet objet.</p>
+<p><img src="img/namespace.png" alt=« Espace de noms et espaces des objets" width="500" /></p>
+<p>Pour créer une nouvelle liste à partir d’une liste existante, une bonne méthode est d’utiliser la méthode <code>map()</code>, qui va appliquer une fonction à l’ensemble des éléments de la liste initiale, et renvoyer la liste des résultats.</p>
+<p>Voici par exemple comment produire une liste de chiens à partir de notre liste de chats. On conserve les mêmes noms, mais en leur rajoutant le mot « Doggie ».</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript">dog_list <span class="op">=</span> <span class="va">cat_list</span>.<span class="at">map</span>(<span class="kw">function</span>(cat) <span class="op">{</span>
+    <span class="cf">return</span> <span class="op">{</span>
+        <span class="dt">name</span><span class="op">:</span> <span class="st">&quot;Doggie &quot;</span><span class="op">+</span> <span class="va">cat</span>.<span class="at">name</span>
+    <span class="op">};</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>La fonction de callback appelée par la méthode <code>.map()</code> va s’appliquer à tous les éléments de la liste, temporairement nommés <code>cat</code>.</p>
+<div id="quel-est-le-poids-des-chiens" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>How much do dogs weigh?</h1>
+<h1 id="quel-est-le-poids-des-chiens" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Quel est le poids des chiens?</h1>
 </div>
 <div class="panel-body">
-<p>Let's assume dogs weigh twice as much as their feline versions. Make the new array reflect this.</p>
+<p>Supposns que nos chiens pèsent chacun le double de leur ancètre chat. Créez la nouvelle liste de cette manière.</p>
 </div>
 </div>
-<p>When we start creating our data for the plot, this is the structured (and nicely annotated) data format that we want. In order to store our variable outside of the scripting environment, we need to convert it into a string.</p>
-<p>JavaScript provides an easy way to do this. Variables can get converted from objects/arrays to strings using <code>JSON.stringify()</code>. To convert our list of cats to a string, type</p>
-<pre class="js"><code>var cat_json = JSON.stringify(cat_list);</code></pre>
-<p>The resulting string is what we would normally store in a <code>.json</code> file to read it in later. At this stage, we can't really create a file, because we're in a browser and creating files would make it too easy to program a virus.</p>
-<p>So instead, let's have a look at our stringified variable using the <code>alert()</code> function:</p>
-<pre class="js"><code>alert(cat_json);</code></pre>
-<p>The output should look like this:</p>
+<p>Lorsque nous allons créer nos données pour le graphique, ce sont des données strucutrées de cette manière qu’il nous faudra.</p>
+<p>Mais pour enregistrer ces données, il faut les mettre dans un format texte. C’est la fonction <code>JSON.stringify()</code> qui se charge de ce travail.</p>
+<p>Pour convertir notre liste de chats en un format JSON, onous allons saisir la commande:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> cat_json <span class="op">=</span> <span class="va">JSON</span>.<span class="at">stringify</span>(cat_list)<span class="op">;</span></code></pre></div>
+<p>La chaîne de caractères résultante est à enregistrer dans un fichier <code>.json</code>, que l'on pourra lire plus tard. Bien sûr à l'intérieur du navigateur il n'est pas permis de créer des fichiers, car le danger serait alors de favoriser la création de virus.</p>
+<p>Mais on peut regarder notre chaîne de caractères avec la fonction <code>alert()</code>:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="at">alert</span>(cat_json)<span class="op">;</span></code></pre></div>
+<p>Le résultat ressemble à ceci:</p>
 <pre class="out"><code>[{&quot;weight&quot;:5,&quot;past_weight_values&quot;:[4.5,5.2,4.9],&quot;name&quot;:&quot;Princess Caroline&quot;},{&quot;weight&quot;:6,&quot;past_weight_values&quot;:[5.9,5.3,6.1],&quot;name&quot;:&quot;Snowball&quot;}]</code></pre>
-<p>We could now copy this string and save it manually in a <code>.json</code> file.</p>
-<div id="de-stringify" class="challenge panel panel-success">
+<p>On peut maintenant recopier cette chaîne et l’enresigtrer à la main dans un fichier <code>.json</code>.</p>
+<div id="convertir-en-json" class="challenge panel panel-success">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-pencil"></span>De-stringify</h2>
+<h2 id="convertir-en-json" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Convertir en JSON</h2>
 </div>
 <div class="panel-body">
-<p>Let's assume we read in a JSON formatted string from a file and want to retrieve the nice structure. This process is called parsing and we can use the JSON.parse() function. Convert the variable <code>cat_json</code> back and store it in a container called <code>new_cat_list</code>.</p>
+<p>À l’inverse, les données sont parfois présentées dans des fichiers au format JSON, et on veut lire ces fichiers pour récupérer les données structurées dans le navigateur. Ce processus s’appelle « phraser » (parse), et la fonction Javascript qui s’en occupe est <code>JSON.parse()</code> Convertissez la variable <code>cat_json</code> en objet Javascript.</p>
 </div>
 </div>
-<p>We are now at a stage where we can have a look at the data file that we want to work with. Open 'nations.json'.</p>
-<p>Here is a snap-shot of our data. We have data from 10 different countries, describing income per capita, population, and life expectancy for different years between 1800 and 2009. Source: <a href="http://www.gapminder.org/data/">gapminder</a></p>
+<p>Nous sommes maintenant arrivés au point où il va falloir ouvrir le fichier de données qui nous intéresse. Ouvrons donc dans un éditeur de texte le fichier 'nations.json'.</p>
+<p>Voici un apeçu de ce fichier. Nous avons des données de 10 pays différents, qui décrivent le revenu par habitant, la population, l’espérance de vie, pour les années 1800 à 2009. Source: <a href="http://www.gapminder.org/data/">gapminder</a></p>
 <pre class="out"><code>[
   {
     &quot;name&quot;: &quot;Angola&quot;,

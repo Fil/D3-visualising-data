@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="generator" content="pandoc">
-    <title>Software Carpentry: D3 - Add and remove</title>
+    <title>Software Carpentry: D3 - Ajouter et supprimer</title>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="css/bootstrap/bootstrap.css" />
@@ -25,104 +25,104 @@
       </div>
       <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <h1 class="title">D3 - Add and remove</h1>
-          <h2 class="subtitle">Dynamically adding and removing data points</h2>
-<div id="learning-objectives" class="objectives panel panel-warning">
+          <h1 class="title">D3 - Ajouter et supprimer</h1>
+          <h2 class="subtitle">Ajout dynamique de points de données</h2>
+<div id="objectifs-de-la-leçon" class="objectives panel panel-warning">
 <div class="panel-heading">
-<h2><span class="glyphicon glyphicon-certificate"></span>Learning Objectives</h2>
+<h2 id="objectifs-de-la-leçon" class="objectives panel panel-warning"><span class="glyphicon glyphicon-certificate"></span>Objectifs de la leçon</h2>
 </div>
 <div class="panel-body">
 <ul>
-<li>Filtering data</li>
-<li>Creating checkboxes</li>
-<li>Adding and removing data points (d3.enter and d3.exit)</li>
+<li>Filtrer les données</li>
+<li>Créer des cases à cocher</li>
+<li>Ajouter et supprimer des points de données (d3.enter et d3.exit)</li>
 </ul>
 </div>
 </div>
-<p>Our plot is pretty busy. We might not want to display everything all the time. The goal for this lesson is to update the plot based on what kind of data we want to display.</p>
-<p>First, we need to find a way to filter our data. We use the function <code>filter</code> to do this. Similar to previous functions (e.g. <code>map</code>), this function iterates over each of the elements in the array <code>nations</code>, temporarily calling it <code>nation</code>. It only includes elements in the new array <code>filtered_nations</code> if the function evaluates to 'true' for that element. Here this will be the case for nations whose population in 2009 was larger than 10,000,000.</p>
-<pre class="js"><code>var filtered_nations = nations.filter(function(nation){ 
-    return nation.population[nation.population.length-1] &gt; 10000000;
-});</code></pre>
-<div id="filtering-by-region" class="challenge panel panel-success">
+<p>Notre graphique est assez chargé. On ne souhaite pas forcément tout afficher tout le temps. L’objectif de cette leçon est de mettre à jour le graphique en fonction des données que l’on veut afficher.</p>
+<p>TOu d’abord il nous faut une manière de filtrer nos données. Pour cela nous allons utiliser la fonction <code>filter</code>. Comme la fonction <code>.map()</code> vue précédemment, cette fonction s’applique à chacun des éléments de la liste <code>nations</code> (l’appelant temporairement <code>nation</code>). Elle n’inclut ensuite dans la nouvelle liste <code>filtered_nations</code> que les éléments pour lesquels la fonction a renvoyé une valeur équivalente à ‘true’. Ici ce sera le cas pour les nations dont la population en 2009 était supérieure à 10 millions d’habitants.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> filtered_nations <span class="op">=</span> <span class="va">nations</span>.<span class="at">filter</span>(<span class="kw">function</span>(nation)<span class="op">{</span> 
+    <span class="cf">return</span> <span class="va">nation</span>.<span class="at">population</span>[<span class="va">nation</span>.<span class="va">population</span>.<span class="at">length</span><span class="dv">-1</span>] <span class="op">&gt;</span> <span class="dv">10000000</span><span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<div id="filtrer-par-région" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>Filtering by region</h1>
+<h1 id="filtrer-par-région" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Filtrer par région</h1>
 </div>
 <div class="panel-body">
-<p>You might have noticed that our data contains information about the region in which a country is.</p>
+<p>Vous avez peut-être remarqué que nos données contiennent des informations sur la région à laquelle appartient un pays.</p>
 <ol style="list-style-type: decimal">
-<li>Create a filter so that you only display data points from &quot;Sub-Saharan Africa&quot;.</li>
+<li>Créer un filtre qui permette de n’afficher que des poins de données appartenant à la région d’Afrique sub-saharienne.</li>
 </ol>
 </div>
 </div>
-<p>We have now hard-coded a criterion for the data we want to display. Naturally, we might want to change what data gets displayed interactively using elements on our page. Let's create some checkboxes that let us add and remove the regions that we want to include. To do this, we will have to switch back to our HTML file for a while.</p>
-<p>Now, instead of displaying all the data all the time, we want to be able to choose which data we display. We will create a checkbox for each region and only display the data for the regions that are checked.</p>
-<p>Checkboxes will need to be added to the HTML page. Since we want to add and remove data, we'll have to add a checkbox for each region like the following one. Checkbox elements are actually <code>input</code> elements with type <code>checkbox</code>. Initially, we want all checkboxes to be checked. We do this by setting the <code>checked</code> attribute of the element to 'checked'.</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;label&gt;&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name=</span><span class="st">&quot;region&quot;</span><span class="ot"> class=</span><span class="st">&quot;region_cb&quot;</span><span class="ot"> value=</span><span class="st">&quot;Sub-Saharan Africa&quot;</span><span class="ot"> checked=</span><span class="st">&quot;checked&quot;</span><span class="kw">/&gt;</span> Sub-Saharan Africa<span class="kw">&lt;/label&gt;</span></code></pre>
-<p>The next step is to add an event listener to the JavaScript file. Luckily, D3 provides us with some nice options. The <code>value</code> needs to be set to the region, because this is the value we want to filter our data by later.</p>
-<pre class="js"><code>d3.selectAll(&quot;.region_cb&quot;).on(&quot;change&quot;, function () { &lt;--- stuff happens here ---&gt; });</code></pre>
-<p>This line listens to all checkboxes that have the class <code>region_cb</code>. Every time a checkbox's status changes from checked to unchecked or unchecked to checked, the following function is executed.</p>
-<p>Inside this function, we want to decide what happens based on which of the checkboxes got checked or unchecked. The first step to doing this is to read out the value of the checkbox. We set this value to the region string earlier. Reading it can be done using the <code>this</code> keyword. <code>this</code> inside a callback function refers to the element through which the function got called, in our case the checkbox.</p>
-<pre class="js"><code>var type = this.value;</code></pre>
-<p>Now that we have the region string saved in <code>type</code>, we want to add the data points for the new nations to include if the checkbox is now checked. Whether it is checked or not is stored in <code>this.checked</code>. To add the new nations to <code>filtered_nations</code>, we use the <code>concat</code> function, which, similar to the <code>concat</code> function we used with strings, joins the array given as an argument onto the end of the first array. Here we join <code>new_nations</code> onto the end of <code>filtered_nations</code>.</p>
-<pre class="js"><code>if (this.checked) { // adding data points 
-  var new_nations = nations.filter(function(nation){ return nation.region == type;});
-  filtered_nations = filtered_nations.concat(new_nations);
-}</code></pre>
-<p>This <code>if</code>-statement gets executed every time a checkbox is checked. To add the data points, we can use the <code>push</code>-function, which adds one object to an array at a time. First, we filter the nations we want to add, calling them <code>new_nations</code>. Next, we are looping through all new nations and add one at a time to the array <code>filtered_nations</code>.</p>
-<p>We also have to initialise <code>filtered_nations</code> at the top of our script. Remember that there is a difference between the object and the name space, so in order to keep <code>nations</code> the way it is, we need to map the values instead of just using <code>=</code>.</p>
-<pre class="js"><code>var filtered_nations = nations.map(function(nation) { return nation; });</code></pre>
-<p>We are initially making <code>filtered_nations</code> be the same as <code>nations</code> because initially all of the checkboxes are checked and we are displaying the data from all of the nations. This also means that any checkbox that is changed from this point will actually be changing to the unchecked state and not entering the <code>if</code>-statement we just made. So we need to add some code to remove elements when the state of a checkbox changes to unchecked.</p>
-<p>But before doing this, we need to learn how to remove elements using D3. This is done using the <code>exit()</code> function.</p>
-<pre class="js"><code>dot.exit().remove();</code></pre>
-<p>Whereas before <code>enter()</code> was used to append new elements to the plot, <code>exit()</code> is used to remove elements from the plot that are no longer in the dataset. Both functions compare the data that has been specified to what elements are in the plot (on the page). As for <code>enter()</code>, everything that follows <code>exit()</code> is performed for each of the elements that no longer have data points corresponding to them. Here (and in most cases) we want to remove these elements.</p>
-<p>A good, brief explanation of this linking between data and elements on the page can be found <a href="http://bost.ocks.org/mike/join/">here</a>. This article discusses the three important functions used for this: <code>enter</code>, <code>exit</code>, and a third function <code>update</code> that we will get to shortly.</p>
-<div id="removing-elements" class="challenge panel panel-success">
+<p>Nous venons de coder en dur un critère pour les données que nous voulons afficher. Naturellement, nous voulons que ce changement se fasse de manière interactive. Créons quelques cases à cocher qui nous permettront d’ajouter les régions que nous souhaitons prendre en compte.</p>
+<p>Pour faire ceci, il nous faut revenir un moment à notre fichier HTML. Nous allons y créer une case à cocher pour chaque région. Au départ, chaque case sera cochée, pour que le graphique démarre avec tout le contenu. En HTML, une case à cocher se fait avec un élément input de type checkbox:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;label&gt;&lt;input</span><span class="ot"> type=</span><span class="st">&quot;checkbox&quot;</span><span class="ot"> name=</span><span class="st">&quot;region&quot;</span><span class="ot"> class=</span><span class="st">&quot;region_cb&quot;</span><span class="ot"> value=</span><span class="st">&quot;Sub-Saharan Africa&quot;</span><span class="ot"> checked=</span><span class="st">&quot;checked&quot;</span><span class="kw">/&gt;</span> Sub-Saharan Africa<span class="kw">&lt;/label&gt;</span></code></pre></div>
+<p>L’étape suivante est d’ajouter un listener qui sera activé à chaque modification des cases à cocher de la page. D3 fournit des outils très pratiques dans ce cas de figure, et permet notamment de récupérer la valeur de chaque option, qui viendra nourrir notre filtre.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">selectAll</span>(<span class="st">&quot;.region_cb&quot;</span>).<span class="at">on</span>(<span class="st">&quot;change&quot;</span><span class="op">,</span> <span class="kw">function</span> () <span class="op">{</span> <span class="op">&lt;---</span> ici se passe l<span class="st">&#39;action ---&gt; });</span></code></pre></div>
+<p>Cette ligne écoute tous les changements d’état des cases à cocher portant la classe <code>region_cb</code>. À chaque modification d’état, qu’il s’agisse de cocher ou de décocher une case, la fonction de rappel est exécutée.</p>
+<p>À l’intérieur de cette fonction, on va lire les données de la case à cocher, que l’on a préalablement réglées comme étant le nom de chaque région. Le mot-clé <code>this</code> dans la fonction de rappel fait référence à l’élément qui vient d’être cliqué, on peut donc récupérer sa valeur.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> type <span class="op">=</span> <span class="kw">this</span>.<span class="at">value</span><span class="op">;</span></code></pre></div>
+<p>Maintenant que le nom de la région est enregistré dans la variable <code>type</code>, il nous faut ajouter les points de données correspondants si la case à cocher est activée. On vérifie si elle est cochée ou non en regardant son attribut <code>this.checked</code>. Pour ajouter les nouvelles nations à <code>filtered_nations</code>, on utilise la fonction <code>concat</code> qui met bout à bout deux tableaux. On ajoute donc <code>new_nations</code> à la fin de <code>filtered_nations</code>.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="cf">if</span> (<span class="kw">this</span>.<span class="at">checked</span>) <span class="op">{</span> <span class="co">// adding data points </span>
+  <span class="kw">var</span> new_nations <span class="op">=</span> <span class="va">nations</span>.<span class="at">filter</span>(<span class="kw">function</span>(nation)<span class="op">{</span> <span class="cf">return</span> <span class="va">nation</span>.<span class="at">region</span> <span class="op">==</span> type<span class="op">;}</span>)<span class="op">;</span>
+  filtered_nations <span class="op">=</span> <span class="va">filtered_nations</span>.<span class="at">concat</span>(new_nations)<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>Cette clause <code>if</code> est exécutée à chaque fois qu’on clique sur une case à cocher. Pour ajouter les points de données, on peut utiliser la fonction <code>push</code>, qui ajoute les éléments un par un. Pour cela, on filtre les nations qu’on veut ajouter, en les appelant <code>new_nations</code>. Ensuite on boucle sur toutes ces nations et on les ajoute une par une à la liste <code>filtered_nations</code>.</p>
+<p>Au préalable il aura fallu initialiser <code>filtered_nations</code> au début de notre script. Comme il existe une différence entre l’espace des noms et l’espace des objets, il faut se souvenir d’utiliser <code>.map()</code> pour cloner les données, et pas seulement <code>=</code>.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">var</span> filtered_nations <span class="op">=</span> <span class="va">nations</span>.<span class="at">map</span>(<span class="kw">function</span>(nation) <span class="op">{</span> <span class="cf">return</span> nation<span class="op">;</span> <span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>Au départ <code>filtered_nations</code> est identique à <code>nations</code> car toutes les cases sont cochées, on affiche les données de toues les nations. Cela signifie que tout changement dans les cases à cocher à cette étape les fera basculer dans l’état « non coché »; il nous faut donc un code à actvier pour enlever des éléments quand une case est décochée.</p>
+<p>Avant de faire ceci, nous devons apprendre à supprimer des éléments en D3. Cela se fait avec la fonction <code>exit()</code>.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">dot</span>.<span class="at">exit</span>().<span class="at">remove</span>()<span class="op">;</span></code></pre></div>
+<p>Là où on utilisait <code>enter()</code> pour ajouter de nouveaux éléments au grpahique, <code>exit()</code> va nous permettre de supprimer des éléments qui ne sont plus présents dans le jeu de données (les pays appartenant à des régions décochées). Les deux fonctions comparent les données demandées à celles qui sont sur le graphique. Comme pour <code>enter()</code>, tout ce qui suit <code>exit()</code> est actionné pour chacun des éléments dont les données ont « disparu ». Ici, comme dans la plupart des cas, on va vouloir supprimer ces éléments graphiques.</p>
+<p>Une bonne explication de ce lien entre les données et les éléments est formulée <a href="http://bost.ocks.org/mike/join/">ici</a>. Cet article détaille les trois fonctionnalités importantes: <code>enter</code>, <code>exit</code>, et une troisième, <code>update</code>, que nous allons bientôt présenter.</p>
+<div id="supprimer-des-éléments" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>Removing elements</h1>
+<h1 id="supprimer-des-éléments" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Supprimer des éléments</h1>
 </div>
 <div class="panel-body">
 <ol style="list-style-type: decimal">
-<li>Using an <code>else</code> case after the <code>if</code> statement, create a filter that removes elements from <code>filtered_data</code> that correspond to the checkbox that was just unchecked. (i.e. <code>else { filtered_nations = &lt;--- fill in this bit ---&gt;}</code>).</li>
+<li>En utilisant un cas <code>else</code> après le <code>if</code>, créer un filtre qui supprime les éléments de <code>filtered_data</code> qui correspondent aux cases à cocher qui viennent d’être décochées. (par exemple <code>else { filtered_nations = &lt;--- remplir cette partie ---&gt;}</code>).</li>
 </ol>
 </div>
 </div>
-<p>As a last step, let's move <code>enter()</code> and <code>exit()</code> into a separate function. This will become useful when we want to update the data from different elements on the page.</p>
-<pre class="js"><code>function update() {
-  var dot = data_canvas.selectAll(&quot;.dot&quot;).data(filtered_nations, function(d){return d.name});
+<p>Dernière étape : déplaçons <code>enter()</code> et <code>exit()</code> dans une fonction à part. Ceci sera utile quand nous voudrons mettre à jour les données de différents éléments de la page.</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="kw">function</span> <span class="at">update</span>() <span class="op">{</span>
+  <span class="kw">var</span> dot <span class="op">=</span> <span class="va">data_canvas</span>.<span class="at">selectAll</span>(<span class="st">&quot;.dot&quot;</span>).<span class="at">data</span>(filtered_nations<span class="op">,</span> <span class="kw">function</span>(d)<span class="op">{</span><span class="cf">return</span> <span class="va">d</span>.<span class="at">name</span><span class="op">}</span>)<span class="op">;</span>
 
-  dot.enter().append(&quot;circle&quot;).attr(&quot;class&quot;,&quot;dot&quot;)                
-                .style(&quot;fill&quot;, function(d) { return colorScale(d.region); });
-                .attr(&quot;cx&quot;, function(d) { return xScale(d.income[d.income.length-1]); }) // this is how attr knows to work with the data
-                .attr(&quot;cy&quot;, function(d) { return yScale(d.lifeExpectancy[d.lifeExpectancy.length-1]); })
-                .attr(&quot;r&quot;, function(d) { return rScale(d.population[d.population.length-1]); });
+  <span class="va">dot</span>.<span class="at">enter</span>().<span class="at">append</span>(<span class="st">&quot;circle&quot;</span>).<span class="at">attr</span>(<span class="st">&quot;class&quot;</span><span class="op">,</span><span class="st">&quot;dot&quot;</span>)                
+                .<span class="at">style</span>(<span class="st">&quot;fill&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">colorScale</span>(<span class="va">d</span>.<span class="at">region</span>)<span class="op">;</span> <span class="op">}</span>)<span class="op">;</span>
+                .<span class="at">attr</span>(<span class="st">&quot;cx&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">xScale</span>(<span class="va">d</span>.<span class="at">income</span>[<span class="va">d</span>.<span class="va">income</span>.<span class="at">length</span><span class="dv">-1</span>])<span class="op">;</span> <span class="op">}</span>) <span class="co">// this is how attr knows to work with the data</span>
+                .<span class="at">attr</span>(<span class="st">&quot;cy&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">yScale</span>(<span class="va">d</span>.<span class="at">lifeExpectancy</span>[<span class="va">d</span>.<span class="va">lifeExpectancy</span>.<span class="at">length</span><span class="dv">-1</span>])<span class="op">;</span> <span class="op">}</span>)
+                .<span class="at">attr</span>(<span class="st">&quot;r&quot;</span><span class="op">,</span> <span class="kw">function</span>(d) <span class="op">{</span> <span class="cf">return</span> <span class="at">rScale</span>(<span class="va">d</span>.<span class="at">population</span>[<span class="va">d</span>.<span class="va">population</span>.<span class="at">length</span><span class="dv">-1</span>])<span class="op">;</span> <span class="op">}</span>)<span class="op">;</span>
 
-  dot.exit().remove();
-}</code></pre>
-<p>This means that we now have to call the update function from our event listener after updating <code>filtered_nations</code> based on the checkbox change:</p>
-<pre class="js"><code>d3.selectAll(&quot;.region_cb&quot;).on(&quot;change&quot;, function() {
-  var type = this.value;
-  if (this.checked) { // adding data points (not quite right yet)
-    var new_nations = nations.filter(function(nation){ return nation.region == type;});
-    filtered_nations = filtered_nations.concat(new_nations);
-  } else { // remove data points from the data that match the filter
-    filtered_nations = filtered_nations.filter(function(nation){ return nation.region != type;});
-  }
-  update();
-});</code></pre>
-<p>In order to create the plot when we first load the page, we will also have to call <code>update()</code> outside of our event listeners once.</p>
-<div id="another-new-dimension" class="challenge panel panel-success">
+  <span class="va">dot</span>.<span class="at">exit</span>().<span class="at">remove</span>()<span class="op">;</span>
+<span class="op">}</span></code></pre></div>
+<p>Désormais, nous pouvons appeler cette fonction de mise à jour (update) depuis notre listener qui surveille les changements d’état des cases à cocher, juste après avoir mis à jour la sélection <code>filtered_nations</code>:</p>
+<div class="sourceCode"><pre class="sourceCode js"><code class="sourceCode javascript"><span class="va">d3</span>.<span class="at">selectAll</span>(<span class="st">&quot;.region_cb&quot;</span>).<span class="at">on</span>(<span class="st">&quot;change&quot;</span><span class="op">,</span> <span class="kw">function</span>() <span class="op">{</span>
+  <span class="kw">var</span> type <span class="op">=</span> <span class="kw">this</span>.<span class="at">value</span><span class="op">;</span>
+  <span class="cf">if</span> (<span class="kw">this</span>.<span class="at">checked</span>) <span class="op">{</span> <span class="co">// adding data points (not quite right yet)</span>
+    <span class="kw">var</span> new_nations <span class="op">=</span> <span class="va">nations</span>.<span class="at">filter</span>(<span class="kw">function</span>(nation)<span class="op">{</span> <span class="cf">return</span> <span class="va">nation</span>.<span class="at">region</span> <span class="op">==</span> type<span class="op">;}</span>)<span class="op">;</span>
+    filtered_nations <span class="op">=</span> <span class="va">filtered_nations</span>.<span class="at">concat</span>(new_nations)<span class="op">;</span>
+  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span> <span class="co">// remove data points from the data that match the filter</span>
+    filtered_nations <span class="op">=</span> <span class="va">filtered_nations</span>.<span class="at">filter</span>(<span class="kw">function</span>(nation)<span class="op">{</span> <span class="cf">return</span> <span class="va">nation</span>.<span class="at">region</span> <span class="op">!=</span> type<span class="op">;}</span>)<span class="op">;</span>
+  <span class="op">}</span>
+  <span class="at">update</span>()<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
+<p>Pour créer le graphique à l’ouverture de la page, on appelle aussi <code>update()</code> une fois hors des listeners.</p>
+<div id="ajouter-une-dimension" class="challenge panel panel-success">
 <div class="panel-heading">
-<h1><span class="glyphicon glyphicon-pencil"></span>Another new dimension</h1>
+<h1 id="ajouter-une-dimension" class="challenge panel panel-success"><span class="glyphicon glyphicon-pencil"></span>Ajouter une dimension</h1>
 </div>
 <div class="panel-body">
 <ol style="list-style-type: decimal">
-<li>Have the colour of circles represent the region. Use category20() to make a scale. You will then need to add <code>.style(&quot;fill&quot;, function(d) { &lt;-- fill in this bit ---&gt; });</code> to the enter() function.</li>
+<li>On souhaite que la couleur des cercles représente la région. Créer une échelle de couleurs avec category20(). Il faudra alors ajouter <code>.style(&quot;fill&quot;, function(d) { &lt;-- remplir cette partie ---&gt; });</code> dans la fonction enter().</li>
 </ol>
 </div>
 </div>
-<p>By the end of this lesson, your page should look something like this:</p>
-<iframe src="http://isakiko.github.io/D3-visualising-data/code/index09.html" width="1000" height="600"></iframe>
+<p>Au terme de cette leçon, votre page devrait ressembler à ceci:</p>
+<iframe src="http://isakiko.github.io/D3-visualising-data/code/index09.html" width="1000" height="600">
+</iframe>
         </div>
       </div>
       <div class="footer">
