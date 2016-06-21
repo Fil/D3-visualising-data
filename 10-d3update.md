@@ -1,34 +1,35 @@
 ---
 layout: page
 title: D3 - Transitions
-subtitle: Move it!
+subtitle: On bouge!
 minutes: 20
 ---
 
-> ## Learning Objectives {.objectives}
+> ## Objectifs du cours {.objectives}
 > 
-> * Using a slider 
-> * Updating data points using d3.transition
-> * Putting it all together by adding regional averages in a master challenge!
+> * Utiliser un slider 
+> * Mettre à jour des points avec d3.transition
+> * Tout regrouper dans un dernier effort!
 
-At the moment, the year that we are looking at in the data is hardcoded. 
-Naturally, we want the user to be able to see how the data changes over time. 
+Dans notre code, l’année à laquelle nous regardons les données est codée « en dur » : il s’agit de l’année 2009, dernière de la série.
 
-Let's do this a slider. The first thing we need is add this slider to the user interface (our website). A slider element is actually an `input` element with the the type `range`. We give it a ID in order to be able to select is from our JavaScript script, a class to style it (if we choose to), and a minimum, maximum, and step size that depend on our data. `value` is what we read out in order to know the position of the slider. Let's initialise it somewhere in the middle (1979).
+Maintenant nous souhaitons que l’utilisateur puisse observer l’évolution de ces données au fil du temps. 
+
+Faisons cela avec un curseur de défilement (slider). La première chose à faire est d’ajouter ce slider ) notre interface (notre page). En HTML il s’agit tout simplement d’un élément `input` de type `range`. Nous lui attribuons  un identifiant de façon à pouvoir le sélectionner depuis notre script, une classe pour pouvoir lui affecter un style (si on le souhaite), et des valeurs minimum, maximum, et de pas qui dépendent de nos données. `value` est la propriété qui nous permet de savoir à quelle position le slider est réglé. Initialisons-le quelque part au milieu de notre série (1979).
 
 ~~~{.html}
 <input type="range" name="range" class="slider" id="year_slider" value="1979" min="1950" max="2008" step="1" ><br>
 ~~~
 
-In our script, we now want the year to be a variable, so we need to initialise it. 
-Because the value is a string, we need to parse it to an integer using `parseInt()`.
-To get the index (rather than the actual year), we can simply subtract the first year 1950.
+Dans notre script, l’année est une variable, nous devons l’intialiser. 
+Comme `value` est une chaîne de caractères et non un nombre, nous devons d’abord le convertir avec `parseInt()`.
+Pour ensuite récupérer l’index (et non l’année), il suffit de retrancher la valeur de la première année de la série, 1950.
 
 ~~~{.js}
 var year_idx = parseInt(document.getElementById("year_slider").value)-1950;
 ~~~
 
-Updating the year becomes quite simple. All we need to do is add another event listener that changes the year the moment we touch the slider. The event we want to listen for is called `input`. We then execute the `update()` function we wrote earlier.
+Mettre à jour l’année devient relativement simple. Il suffit d’ajouter un nouveau listener qui modifie la variable `year`lorsque nous touchons au slider. L’événement que l’on souhaite écouter s’appelle `input`. On exécute alors la fonction `update()` définie précédemment.
 
 ~~~{.js}
 d3.select("#year_slider").on("input", function () {
@@ -37,39 +38,39 @@ d3.select("#year_slider").on("input", function () {
 });
 ~~~
 
-So far, the update function only knows how to handle new data (`.enter`) and removed data (`.exit`), but not what to do when we update data. 
-In addition to `d3.enter()` and `d3.exit()`, D3 also offers `d3.transition` to handle updating data. First, we need to define how to transition between data points. We might want to interpolate between to values linearly over the duration of 200 ms, like this: 
+Jusqu’ici la fonction update ne sait que gérer des ajouts et des suppressions de données, avec `.enter` et `.exit`; que faire lorsque des données évoluent?
+En plus de `d3.enter()` et `d3.exit()`, D3 offre `d3.transition` qui permet de gérer la mise à jour des données**. Mais d’abord il faut définir comment on passe d’une valeur à la suivante. Nous pouvons souhaiter faire une interpolation linéaire des valeurs sur une durée de 200ms, comme ceci: 
 
 ~~~{.js}
 dot.transition().ease("linear").duration(200);
 ~~~
 
-Now we know how it's gonna happen, but we need to tell the transition what the actual change is. 
-We can simply move the part of our code that updates the circle attributes from our `enter` function to our `transition` function. Now, instead of using a hardcoded index for the year, we use the index `year_idx` that we updated in our event listener earlier.
+Il reste à dire vers quelle valeur on va effectuer la transition. 
+Pour cela, déplaçons le bout de code qui met à jour le cercle, en le retirant de `enter()` pour le mettre dans la partie `transition()`. Et, à la place de l’index en dur pour aller chercher l’année, on va se baser sur la valeur de `year_idx`, qui a été mise à jour un peu avant dans notre listener.
 
 ~~~{.js}
 dot.enter().append("circle").attr("class","dot")
         .style("fill", function(d) { return colorScale(d.region); });
 dot.exit().remove();
 dot.transition().ease("linear").duration(200)
-				.attr("cx", function(d) { return xScale(d.income[year_idx]); }) // this is how attr knows to work with the data
+				.attr("cx", function(d) { return xScale(d.income[year_idx]); }) // voici comment attr sait quelle donnée il doit considérer
 				.attr("cy", function(d) { return yScale(d.lifeExpectancy[year_idx]); })
 				.attr("r", function(d) { return rScale(d.population[year_idx]); });
 ~~~
 
-> ## Other transition functions you might want {.callout}
-> * sin - applies the trigonometric function sin.
-> * exp - raises 2 to a power based on t.
-> * bounce - simulates a bouncy collision.
-> * elastic(a, p) - simulates an elastic band; may extend slightly beyond 0 and 1.
-> * [more here](https://github.com/mbostock/d3/wiki/Transitions#d3_ease)
+> ## D’autres fonctions de transition sont possibles {.callout}
+> * sin - applique la fonction trigonométrique sinus().
+> * exp - exponentielle.
+> * bounce - simule une collision avec un rebond.
+> * elastic(a, p) - simulates un élastique; cette fonction peut dépasser un peu des bornes 0 et 1.
+> * [pour en savoir plus](https://github.com/mbostock/d3/wiki/Transitions#d3_ease)
 
-> # Play time {.challenge}
-> D3 is incredible versatile. Try out different transitions and if you have time, maybe try drawing rectangles instead of circles.
+> # C’est l’heure de s’amuser {.challenge}
+> D3 est incroyablement versatile. ESsayez différentes transitions et, si vous avez du temps, voyez comment dessiner des rectangles à la place des cercles.
 
-Next, we might want to create a tooltip. Let's go have a look at what's already out there. 
-The creator of D3 has put up some code for pretty much everything you can imagine. The example for a simple tooltip can be found [here](http://bl.ocks.org/biovisualize/1016860).
-We need to first create the variable tooltip:
+Ensuite, nous voulons créer un pop-up. Regardons un peu ce qui existe déjà sur internet. 
+Il existe beaucoup d’exemples de code utilisant D3. Voici un exemple de [simple pop-up](http://bl.ocks.org/biovisualize/1016860).
+Pour suivre cet exemple nous commençons par créer la variable tooltip:
 
 ~~~{.js}
 var tooltip = d3.select("body")
@@ -78,7 +79,7 @@ var tooltip = d3.select("body")
 	.style("visibility", "hidden");
 ~~~
 
-and then create event listeners for moving the mouse into a circle and out of one. Different from the example on the web page, we want to display the specific country we are looking at. When we move the mouse, we want the tool tip to move with it. And the moment we leave a circle, we want the tool tip to hide again.
+puis nous créons un listener pour les événements de survol des cercles avec la souris. Le code cidessous permet d’afficher le pays que l’on survole, le pop-up va suivre le mouvement de la souris, et quand on quitte le cercle, le popup doit disparaître.
 
 ~~~{.js}
 dot.enter().append("circle").attr("class","dot")				      	
@@ -88,14 +89,14 @@ dot.enter().append("circle").attr("class","dot")
 			.on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 ~~~
 
-> ## We have used some special objects given to us by the browser {.callout}
-> * document.x - selecting things within the page (getElementById)
-> * console.x - interact with the browser's console (log)
-> * event.x - only interesting in the scope of an event like "mouseover", "mousemove", "keydown". Returns information about the event (pageX - where on the page did this event occur?).
+> ## Nous avons exploité différents objets donnés par le navigateur  {.callout}
+> * document.x - sélectionner des choses sur la page (getElementById)
+> * console.x - afficher un élément dans la console (log)
+> * event.x - dans le cadre d’un événement comme “mouseover”, "mousemove", ou “keydown”. Renvoie des détails sur l’événement (pageX - où cet événement s’est-il produit dans la page?).
 
-Like any programming language, JavaScript can also be used to evaluate summary statistics of our data. As an example, let's compute the mean life expectancy and income for the different regions. 
+Comme tout langage de programmation, Javascript peut aussi servir à faire des calculs statistiques avec nos données. Comme exemple, calculons la moyenne de l’espérance de vie et du revenu par habitant dans les différentes régions. 
 
-First, we need to loop through all the data and group them by the region they are in:
+On commence par faire le tour des pays en les groupant par région:
 
 ~~~{.js}
 // Calculate the averages for each region.
@@ -112,7 +113,7 @@ for (var i in region_names) {
 var filtered_reg_nations = region_data.map(function(region) { return region;});
 ~~~
 
-Next, we write a function that returns an array of objects region_data. We want it to contain the mean income and life for each year across all nations, weighted by population.
+Ensuite, on crée une fonction qui renvoie un tableau d’objets region_data. On souhaite qu’il contienne la moyenne du revenu par habitant et de l’espérance de vie année par année, à travers toutes les nations, pondérées par la population.
 
 ~~~{.js}
 function calc_mean(region_data) {
@@ -147,15 +148,15 @@ function calc_mean(region_data) {
 }
 ~~~
 
-> # The master challenge {.challenge}
-> It's time to put together everything you've learned. Write code that displays (and updates) the mean values that we just computed as little crosses in the graph for the different regions.
+> # Le grand défi {.challenge}
+> Il est temps de mettre ensemble tout ce que nous avons appris. Ecrire du code qui affiche (et met à jour) les valeurs moyennes que nous venons de calculer sous forme de petites croix dans le graphique, une croix figurant chaque région.
 
 > # ...style! {.challenge}
-> Add axis labels and make the fonts pretty. 
+> Ajouter des étiquettes aux axes et choisir de jolies polices de caractères. 
 
-> # Using different data formats {.challenge}
-> What if you don't have your data in JSON format? Change your code to load in nations.csv instead of nations.json and have it produce the same plot. 
+> # Utiliser d’autres formats de données {.challenge}
+> Essayer de charger nations.csv à la place de nations.json - pour produire le même graphique. 
 
-By the end of this lesson, your page should look something like this:
+À la fin de cette leçon, votre page doit resembler à ceci:
 
 <iframe src="http://isakiko.github.io/D3-visualising-data/code/index10.html" width="1000" height="600"></iframe>
