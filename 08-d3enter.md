@@ -94,7 +94,7 @@ On emploie ici une fonction de clé `.data(nations, function(d){return d.name});
 Et c’est ici qu’opère la magie:
 La fonction `enter()` prend chaque élément du jeu de données, et applique tout ce qui suit à chacun des éléments que l’on a ajoutés. Ces nouveaux points vont être ajoutés avec la classe 'dot', ce qui permettra de les récupérer au prochain appel de `data_canvas.selectAll(".dot")`.
 
-Maintenant nous allons créer un cercle pour chaque point de données. C’est le rôle des quatre lignes de code qui suivent. Elles créent le cercle, puis règlen ses attributs  `cx`, `cy`, et `r`. 
+Maintenant nous allons créer un cercle pour chaque point de données. C’est le rôle des quatre lignes de code qui suivent. Elles créent le cercle, puis règlent ses attributs  `cx`, `cy`, et `r`. 
 Les attributs `cx` et `cy` définissent la position du centre du cercle et sont basés sur le revenu (on utilise la donnée la plus récente avec le code: `[nation.income.length-1]`.) et l’espérance de vie, que l’on trouve dans notre donnée (temporairement appelée `d`). Le rayon pour l’instant est fixée à une valeur arbitraire.
 
 
